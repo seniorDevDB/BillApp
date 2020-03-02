@@ -1,9 +1,8 @@
 import React from 'react';
 import {
   StyleSheet,
-  TextInput,
   View,
-  Button
+  Text
 } from 'react-native';
 
 const width = '80%';
@@ -19,26 +18,12 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, route } = this.props;
 
     return (
       <View style={styles.container}>
-        <TextInput style={styles.inputContainer}
-          underlineColorAndroid="transparent"
-          placeholder="Enter bank name or sign-in URL"
-          placeholderTextColor="#9a73ef"
-          autoCapitalize="none"
-          onChangeText={this.handleURL}>
-        </TextInput>
-        <View style={styles.buttonContainer}>
-          <Button style={styles.buttonContainer}
-            onPress={() => {
-              navigation.navigate("Result");
-            }}
-            title="Next"
-            color="red"
-          />
-        </View>
+        <Text style={styles.textContainer}>{route.params.responseJson.billDate}</Text>
+        <Text style={styles.textContainer}>${route.params.responseJson.amount}</Text>
       </View>
     );
   }
@@ -52,15 +37,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  inputContainer: {
-    width: width,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-  buttonContainer: {
-    marginTop:20,
+  textContainer: {
+      color: 'blue',
+      fontSize: 20,
+      marginTop:5,
   }
 });
 
