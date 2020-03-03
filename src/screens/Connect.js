@@ -7,6 +7,7 @@ import {
     Alert,
     Text,
 } from 'react-native';
+import { signOut } from '../redux/actions/auth.action';
 
 const width = '80%';
 
@@ -16,7 +17,7 @@ export default class App extends React.Component {
         id: '',
         password: '',
         phone_number: '',
-        b_credential:true,
+        b_credential: true,
     }
 
     handleId = (text) => {
@@ -47,13 +48,13 @@ export default class App extends React.Component {
                 console.log(responseJson.billDate);
                 console.log(responseJson.amount);
                 if (responseJson.res == "credentialInvalid") {
-                    this.setState({b_credential: false});
+                    this.setState({ b_credential: false });
                 }
                 else if (responseJson.res == "code") {
                     this.props.navigation.navigate("OTP")
                 }
                 else {
-                    this.props.navigation.navigate("Result", {responseJson})
+                    this.props.navigation.navigate("Result", { responseJson })
                 }
             })
             .catch((error) => {
@@ -64,8 +65,8 @@ export default class App extends React.Component {
                     //body
                     'Please Try Again.',
                     [
-                        {text: 'Yes', onPress: () => console.log('Yes Pressed')},
-                        {text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel'},
+                        { text: 'Yes', onPress: () => console.log('Yes Pressed') },
+                        { text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel' },
                     ],
                     { cancelable: false }
                     //clicking out side of alert will not cancel
@@ -80,7 +81,7 @@ export default class App extends React.Component {
         return (
             <View style={styles.container}>
                 <View>
-                    { this.state.b_credential? validCredential : invalidCredentialMessage}
+                    {this.state.b_credential ? validCredential : invalidCredentialMessage}
                 </View>
                 <TextInput style={styles.inputContainer}
                     underlineColorAndroid="transparent"
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     textContainer: {
-        fontSize:20,
+        fontSize: 20,
         color: "red",
     }
 });

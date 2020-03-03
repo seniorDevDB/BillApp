@@ -4,13 +4,14 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux';
+import { signIn, isSignedIn } from '../redux/actions/auth.action';
 
 const width = '80%';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
 
   state = {
     username: '',
@@ -23,6 +24,27 @@ export default class Login extends React.Component {
 
   handlePassword = (text) => {
     this.setState({ password: text })
+  }
+
+  logIn = async () => {
+    const { dispatch, navigation: { navigate } } = this.props;
+    const { username, password } = this.state;
+    try {
+      await dispatch(signIn(username, password));
+      navigate("Home");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async componentDidMount() {
+    const { dispatch, navigation: { navigate } } = this.props;
+    try {
+      await dispatch(isSignedIn());
+      navigate("Home");
+    } catch (error) {
+      console.log("no token found, please sign in again.");
+    }
   }
 
   render() {
@@ -48,7 +70,7 @@ export default class Login extends React.Component {
           onChangeText={this.handlePassword}>
         </TextInput>
         <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText} onPress={this.logIn}>Login</Text>
         </TouchableOpacity>
         <View style={styles.signupTextContainer}>
           <Text style={styles.signupText}>Don't have an account yet?</Text>
@@ -114,3 +136,6 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = ({ auth }) => ({ auth });
+
+export default connect(mapStateToProps)(Login);

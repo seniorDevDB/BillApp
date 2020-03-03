@@ -5,10 +5,12 @@ import {
   View,
   Button
 } from 'react-native';
+import { connect } from 'react-redux';
+import { signOut } from '../redux/actions/auth.action';
 
 const width = '80%';
 
-export default class App extends React.Component {
+class AddAccount extends React.Component {
 
   state = {
     url: '',
@@ -18,8 +20,18 @@ export default class App extends React.Component {
     this.setState({ url: text })
   }
 
+  logOut = async () => {
+    const { dispatch, navigation: { navigate } } = this.props;
+    try {
+      await dispatch(signOut());
+    } catch (error) {
+      console.log(error);
+    }
+    navigate("Login");
+  }
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, auth } = this.props;
 
     return (
       <View style={styles.container}>
@@ -37,6 +49,11 @@ export default class App extends React.Component {
             }}
             title="Next"
             color="red"
+          />
+          <Button
+            onPress={this.logOut}
+            title="Log Out"
+            color="blue"
           />
         </View>
       </View>
@@ -64,3 +81,7 @@ const styles = StyleSheet.create({
   }
 });
 
+
+const mapStateToProps = ({ auth }) => ({ auth });
+
+export default connect(mapStateToProps)(AddAccount);

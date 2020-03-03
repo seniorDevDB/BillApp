@@ -38,6 +38,14 @@ export default class Signup extends React.Component {
         </TextInput>
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
+          placeholder="Email"
+          id="email"
+          placeholderTextColor="#ffffff"
+          autoCapitalize="none"
+          onChangeText={this.handlePassword}>
+        </TextInput>
+        <TextInput style={styles.inputContainer}
+          underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Password"
           id="password"
           placeholderTextColor="#ffffff"
@@ -45,7 +53,7 @@ export default class Signup extends React.Component {
           onChangeText={this.handlePassword}>
         </TextInput>
         <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
         <View style={styles.signupTextContainer}>
           <Text style={styles.signupText}>Already have an account?</Text>
