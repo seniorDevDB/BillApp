@@ -1,21 +1,27 @@
-import { LOG_OUT, LOG_IN_SUCCESS, LOG_IN_FAILED } from "../actionTypes";
+import { LOG_OUT, LOG_IN_SUCCESS, LOG_IN_FAILED, SIGNUP_FAILED } from "../actionTypes";
 
 const INITIAL_STATE = {
     token: {},
-    info: {},
+    email: {},
     errMsg: "",
+    // signupErrMsg: "sss",
 }
 
 const authReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case LOG_IN_SUCCESS:
-            const { token, info } = action.payload;
-            return { ...state, token, info, errMsg: "" };
+            const { token, email } = action.payload;
+            return { ...state, token, email, errMsg: "" };
         case LOG_IN_FAILED:
             const { errMsg } = action.payload;
             return { ...state, token: {}, info: {}, errMsg };
         case LOG_OUT:
             return { ...state, token: {}, info: {} };
+        // case SIGNUP_FAILED:
+        //     const { signupErrMsg } = action.payload;
+        //     console.log("eeeeeeeeedddddddddd");
+        //     console.log(signupErrMsg);
+        //     return { ...state, token: {}, info: {}, errMsg: {}, signupErrMsg};
         default:
             return state;
     }

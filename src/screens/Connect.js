@@ -7,7 +7,6 @@ import {
     Alert,
     Text,
 } from 'react-native';
-import { signOut } from '../redux/actions/auth.action';
 
 const width = '80%';
 

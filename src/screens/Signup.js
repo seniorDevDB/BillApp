@@ -7,57 +7,123 @@ import {
   Button,
   TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux';
+import { signUp } from '../redux/actions/auth.action';
+
 
 const width = '80%';
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
 
   state = {
-    url: '',
+    firstname: 'dev',
+    lastname: 'test',
+    email: 'test12@gmail.com',
+    password1: 'aA1',
+    password2: 'aA1',
+    b_invalid: false,
+    errMSG: {},
   }
 
-  handleURL = (text) => {
-    this.setState({ url: text })
+  handleFirstname = (text) => {
+    this.setState({ firstname: text })
+  }
+
+  handleLastname = (text) => {
+    this.setState({ lastname: text })
+  }
+
+  handleEmail = (text) => {
+    this.setState({ email: text })
+  }
+
+  handlePassword1 = (text) => {
+    this.setState({ password1: text })
+  }
+
+  handlePassword2 = (text) => {
+    this.setState({ password2: text })
+  }
+
+  handleSignup = async () => {
+    const { dispatch, navigation: { navigate } } = this.props;
+    const { firstname, lastname, email, password1, password2 } = this.state;
+    try {
+      const res = await dispatch(signUp(firstname, lastname, email, password1, password2));
+      if (res == "suc") {
+        navigate("Login");
+      } else {
+        this.setState( {b_invalid: true} );
+        console.log(res);
+        this.setState( {errMSG: res});
+      }
+
+    } catch (error) {
+
+    }
   }
 
   render() {
-    const { navigation, route } = this.props;
-
+    const { navigation, route, auth } = this.props;
+    const { firstname, lastname, email, password1, password2 } = this.state;
+    console.log("PROPS AUTH", auth);
     return (
       <View style={styles.container}>
-        <Text style={{ fontSize: 27 }}>
-          Signup
-        </Text>
+
+        {this.state.b_invalid ? <Text style={{ fontSize: 20 }}>{this.state.errMSG.email} {this.state.errMSG.password1}</Text>  : <Text style={{ fontSize: 20 }}></Text>}
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
-          placeholder="User ID"
-          id="username"
+          placeholder="First name"
+          id="firstname"
+          value={firstname}
           placeholderTextColor="#ffffff"
           autoCapitalize="none"
-          onChangeText={this.handleId}>
+          onChangeText={this.handleFirstname}>
+        </TextInput>
+        <TextInput style={styles.inputContainer}
+          underlineColorAndroid="rgba(0,0,0,0)"
+          placeholder="Last name"
+          id="lastname"
+          value={lastname}
+          placeholderTextColor="#ffffff"
+          autoCapitalize="none"
+          onChangeText={this.handleLastname}>
         </TextInput>
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Email"
           id="email"
+          value={email}
           placeholderTextColor="#ffffff"
           autoCapitalize="none"
-          onChangeText={this.handlePassword}>
+          onChangeText={this.handleEmail}>
         </TextInput>
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
-          placeholder="Password"
-          id="password"
+          placeholder="Password1"
+          id="password1"
+          value={password1}
+          secureTextEntry={true}
           placeholderTextColor="#ffffff"
           autoCapitalize="none"
-          onChangeText={this.handlePassword}>
+          onChangeText={this.handlePassword1}>
         </TextInput>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TextInput style={styles.inputContainer}
+          underlineColorAndroid="rgba(0,0,0,0)"
+          placeholder="Password2"
+          id="password2"
+          value={password2}
+          secureTextEntry={true}
+          placeholderTextColor="#ffffff"
+          autoCapitalize="none"
+          onChangeText={this.handlePassword2}>
+        </TextInput>
+        <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSignup}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
         <View style={styles.signupTextContainer}>
           <Text style={styles.signupText}>Already have an account?</Text>
-          <Text style={styles.signupButton}>Sign in</Text>
+          <Text style={styles.signupButton} onPress={() => navigation.navigate("Login")}>Sign in</Text>
         </View>
       </View>
     );
@@ -119,3 +185,8 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = ({ auth }) => {
+  return { auth };
+}
+
+export default connect(mapStateToProps)(Signup);

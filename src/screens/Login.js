@@ -14,23 +14,25 @@ const width = '80%';
 class Login extends React.Component {
 
   state = {
-    username: '',
+    email: '',
     password: '',
   }
 
-  handleUsername = (text) => {
-    this.setState({ username: text });
+  handleEmail = (text) => {
+    this.setState({ email: text });
   }
 
   handlePassword = (text) => {
     this.setState({ password: text })
   }
 
-  logIn = async () => {
+  handleLogIn = async () => {
     const { dispatch, navigation: { navigate } } = this.props;
-    const { username, password } = this.state;
+    const { email, password } = this.state;
+    console.log("ddddddddddddddddddddd", email);
     try {
-      await dispatch(signIn(username, password));
+      console.log("ddddddddddddddddddddd");
+      await dispatch(signIn(email, password));
       navigate("Home");
     } catch (error) {
       console.log(error);
@@ -38,7 +40,8 @@ class Login extends React.Component {
   }
 
   async componentDidMount() {
-    const { dispatch, navigation: { navigate } } = this.props;
+    const { dispatch, navigation: { navigate }} = this.props;
+    console.log("AUTH!!!!!!!!!!!!!!!!!!!!!:");
     try {
       await dispatch(isSignedIn());
       navigate("Home");
@@ -54,11 +57,11 @@ class Login extends React.Component {
       <View style={styles.container}>
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
-          placeholder="User ID"
-          id="username"
+          placeholder="Email"
+          id="email"
           placeholderTextColor="#ffffff"
           autoCapitalize="none"
-          onChangeText={this.handleUsername}>
+          onChangeText={this.handleEmail}>
         </TextInput>
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
@@ -70,7 +73,7 @@ class Login extends React.Component {
           onChangeText={this.handlePassword}>
         </TextInput>
         <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText} onPress={this.logIn}>Login</Text>
+          <Text style={styles.buttonText} onPress={this.handleLogIn}>Login</Text>
         </TouchableOpacity>
         <View style={styles.signupTextContainer}>
           <Text style={styles.signupText}>Don't have an account yet?</Text>
