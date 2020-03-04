@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   StyleSheet,
   View,
@@ -16,13 +16,16 @@ const width = '80%';
 class Signup extends React.Component {
 
   state = {
-    firstname: 'dev',
-    lastname: 'test',
-    email: 'test12@gmail.com',
-    password1: 'aA1',
-    password2: 'aA1',
-    b_invalid: false,
-    errMSG: {},
+    firstname: '',
+    lastname: '',
+    email: '',
+    password1: '',
+    password2: '',
+    // b_invalid: false,
+    // errMSG: {},
+    errEmail:'',
+    errPassword1:'',
+    errPassword2:'',
   }
 
   handleFirstname = (text) => {
@@ -53,9 +56,12 @@ class Signup extends React.Component {
       if (res == "suc") {
         navigate("Login");
       } else {
-        this.setState( {b_invalid: true} );
+        // this.setState( {b_invalid: true} );
+        this.setState( {errEmail: res.email} );
+        this.setState( {errPassword1: res.password1} );
+        this.setState( {errPassword2: res.password2} );
         console.log(res);
-        this.setState( {errMSG: res});
+        // this.setState( {errMSG: res});
       }
 
     } catch (error) {
@@ -70,7 +76,7 @@ class Signup extends React.Component {
     return (
       <View style={styles.container}>
 
-        {this.state.b_invalid ? <Text style={{ fontSize: 20 }}>{this.state.errMSG.email} {this.state.errMSG.password1}</Text>  : <Text style={{ fontSize: 20 }}></Text>}
+        {/* {this.state.b_invalid ? <Text style={{ fontSize: 20 }}>{this.state.errMSG.email} {this.state.errMSG.password1}</Text>  : <Text style={{ fontSize: 20 }}></Text>} */}
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="First name"
@@ -98,6 +104,7 @@ class Signup extends React.Component {
           autoCapitalize="none"
           onChangeText={this.handleEmail}>
         </TextInput>
+        {this.state.errEmail ? <Text> {this.state.errEmail} </Text> : <Fragment />}
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Password1"
@@ -108,6 +115,7 @@ class Signup extends React.Component {
           autoCapitalize="none"
           onChangeText={this.handlePassword1}>
         </TextInput>
+        {this.state.errPassword1 ?  <Text> {this.state.errPassword1} </Text> : <Fragment />}
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Password2"
@@ -118,6 +126,7 @@ class Signup extends React.Component {
           autoCapitalize="none"
           onChangeText={this.handlePassword2}>
         </TextInput>
+        {this.state.errPassword2 ?  <Text> {this.state.errPassword2} </Text> : <Fragment />}
         <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSignup}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>

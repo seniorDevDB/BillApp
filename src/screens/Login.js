@@ -16,6 +16,8 @@ class Login extends React.Component {
   state = {
     email: '',
     password: '',
+    errEmail: '',
+    errPassword: '',
   }
 
   handleEmail = (text) => {
@@ -35,7 +37,7 @@ class Login extends React.Component {
       await dispatch(signIn(email, password));
       navigate("Home");
     } catch (error) {
-      console.log(error);
+      console.log("dddddddddddddddddssssss",error);
     }
   }
 
@@ -51,8 +53,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const { navigation, route } = this.props;
-
+    const { navigation, route, auth } = this.props;
+    const { email, password, errEmail, errPassword } = this.state;
     return (
       <View style={styles.container}>
         <TextInput style={styles.inputContainer}
@@ -63,6 +65,7 @@ class Login extends React.Component {
           autoCapitalize="none"
           onChangeText={this.handleEmail}>
         </TextInput>
+        <Text> {auth.errMsg.email} </Text>
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Password"
@@ -72,6 +75,7 @@ class Login extends React.Component {
           autoCapitalize="none"
           onChangeText={this.handlePassword}>
         </TextInput>
+        <Text> {auth.errMsg.password} </Text>
         <TouchableOpacity style={styles.buttonContainer}>
           <Text style={styles.buttonText} onPress={this.handleLogIn}>Login</Text>
         </TouchableOpacity>

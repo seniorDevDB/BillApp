@@ -8,12 +8,14 @@ export const signIn = (email, password) => async dispatch => {
     try {
         //res = api call
         const response = await accountService.signin(email, password);
-        await AsyncStorage.setItem("billling_app_user_token", response.data.key);
         const payload = { token: response.data.key, email: email};
+        await AsyncStorage.setItem("billling_app_user_token", JSON.stringify(payload));
         dispatch({type: LOG_IN_SUCCESS, payload: payload});
         
     } catch (error) {
-        dispatch({type: LOG_IN_FAILED, payload: { errMsg: "failed" }});
+        console.log("this is auth action errorrorororororororo")
+        console.log(error.response.data)
+        dispatch({type: LOG_IN_FAILED, payload: { errMsg: error.response.data }});
         throw error;
     }
 }
@@ -23,7 +25,7 @@ export const isSignedIn = () => async dispatch => {
         //res = api call
         const token = await AsyncStorage.getItem("billling_app_user_token");
         if(!token) throw new Error("no token defined");
-        dispatch({type: LOG_IN_SUCCESS, payload: { token: JSON.parse(token) }});
+        dispatch({type: LOG_IN_SUCCESS, payload: JSON.parse(token)});
     } catch (error) {
         throw error;
     }
@@ -32,13 +34,11 @@ export const isSignedIn = () => async dispatch => {
 export const signOut = () => async dispatch => {
     try {
         //res = api call
-
+    } catch (error) {}
+    try {
         await AsyncStorage.removeItem("billling_app_user_token");
-        dispatch({type: LOG_OUT});
-    } catch (error) {
-        dispatch({type: LOG_OUT});
-        throw error;
-    }
+    } catch (error) {}
+    dispatch({type: LOG_OUT});
 }
 
 export const signUp = (firstname, lastname, email, password1, password2) => async () => {
