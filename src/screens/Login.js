@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   StyleSheet,
   View,
@@ -42,7 +42,7 @@ class Login extends React.Component {
   }
 
   async componentDidMount() {
-    const { dispatch, navigation: { navigate }} = this.props;
+    const { dispatch, navigation: { navigate }, auth} = this.props;
     console.log("AUTH!!!!!!!!!!!!!!!!!!!!!:");
     try {
       await dispatch(isSignedIn());
@@ -65,7 +65,7 @@ class Login extends React.Component {
           autoCapitalize="none"
           onChangeText={this.handleEmail}>
         </TextInput>
-        <Text> {auth.errMsg.email} </Text>
+        {auth.errMsg.email || auth.errMsg.non_field_errors ? <Text>{auth.errMsg.email || auth.errMsg.non_field_errors}</Text> : <Fragment/>}
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Password"
@@ -75,7 +75,7 @@ class Login extends React.Component {
           autoCapitalize="none"
           onChangeText={this.handlePassword}>
         </TextInput>
-        <Text> {auth.errMsg.password} </Text>
+        {auth.errMsg.password || auth.errMsg.non_field_errors ? <Text>{auth.errMsg.password || auth.errMsg.non_field_errors}</Text> : <Fragment/>}
         <TouchableOpacity style={styles.buttonContainer}>
           <Text style={styles.buttonText} onPress={this.handleLogIn}>Login</Text>
         </TouchableOpacity>
