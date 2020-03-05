@@ -18,7 +18,18 @@ export const signin = (email, password) => {
 }
 
 export const signout = () => {
+    var bodyFormData = new FormData();
+    const response = axios({
+        method: "post",
 
+        url: APIPath.root_url + `/api/accounts/auth/login/`,
+
+        headers: { "Content-Type": "application/json" },
+
+        data: bodyFormData
+    });
+    console.log("dsdaaaaaaaaaaaaaaaaaaaaaaaaa", response);
+    return response;
 }
 
 export const signup = (firstname, lastname, email, password1, password2) => {

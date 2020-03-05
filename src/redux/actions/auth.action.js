@@ -34,6 +34,7 @@ export const isSignedIn = () => async dispatch => {
 export const signOut = () => async dispatch => {
     try {
         //res = api call
+        const response = await accountService.signout();
     } catch (error) {}
     try {
         await AsyncStorage.removeItem("billling_app_user_token");
