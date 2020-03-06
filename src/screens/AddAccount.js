@@ -3,7 +3,9 @@ import {
   StyleSheet,
   TextInput,
   View,
-  Button
+  Button,
+  TouchableOpacity,
+  Text
 } from 'react-native';
 import { connect } from 'react-redux';
 import { signOut } from '../redux/actions/auth.action';
@@ -36,26 +38,23 @@ class AddAccount extends React.Component {
     return (
       <View style={styles.container}>
         <TextInput style={styles.inputContainer}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Enter bank name or sign-in URL"
-          placeholderTextColor="#9a73ef"
+          id="bankUrl"
+          placeholderTextColor="#ffffff"
           autoCapitalize="none"
           onChangeText={this.handleURL}>
         </TextInput>
-        <View style={styles.buttonContainer}>
-          <Button style={styles.buttonContainer}
-            onPress={() => {
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text style={styles.buttonText} onPress={() => {
               navigation.navigate("Connect");
-            }}
-            title="Next"
-            color="red"
-          />
-          <Button
-            onPress={this.logOut}
-            title="Log Out"
-            color="blue"
-          />
-        </View>
+            }}>NEXT</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text style={styles.buttonText} onPress={this.logOut}>
+            Log Out
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -65,20 +64,34 @@ class AddAccount extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#455a64',
     alignItems: 'center',
     justifyContent: 'center',
   },
   inputContainer: {
     width: width,
-    height: 40,
+    backgroundColor: 'rgba(255,255,255,0.3)',
     borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 25,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: '#ffffff',
+    marginVertical: 10,
   },
   buttonContainer: {
-    marginTop: 20,
-  }
+    backgroundColor: '#1c313a',
+    borderRadius: 25,
+    width: width,
+    marginVertical: 10,
+    paddingVertical: 13,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#ffffff',
+    textAlign: "center",
+  },
 });
 
 

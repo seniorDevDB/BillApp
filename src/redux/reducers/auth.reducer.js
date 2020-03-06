@@ -1,7 +1,7 @@
 import { LOG_OUT, LOG_IN_SUCCESS, LOG_IN_FAILED, SIGNUP_FAILED } from "../actionTypes";
 
 const INITIAL_STATE = {
-    token: "",
+    token: "asdfasdfasdf",
     email: "",
     errMsg: "",
     // signupErrMsg: "sss",

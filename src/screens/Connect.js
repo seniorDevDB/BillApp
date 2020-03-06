@@ -6,6 +6,7 @@ import {
     Button,
     Alert,
     Text,
+    TouchableOpacity
 } from 'react-native';
 
 const width = '80%';
@@ -76,43 +77,39 @@ export default class App extends React.Component {
     render() {
         const { navigation } = this.props;
         const invalidCredentialMessage = <Text style={styles.textContainer}> Be sure you enter a valid credentials. </Text>;
-        const validCredential = <Text style={styles.textContainer}> Sign In </Text>;
+        const validCredential = <Text style={styles.textContainer}> Connect </Text>;
         return (
             <View style={styles.container}>
                 <View>
                     {this.state.b_credential ? validCredential : invalidCredentialMessage}
                 </View>
                 <TextInput style={styles.inputContainer}
-                    underlineColorAndroid="transparent"
+                    underlineColorAndroid="rgba(0,0,0,0)"
                     placeholder="User ID"
                     id="userId"
-                    placeholderTextColor="#9a73ef"
+                    placeholderTextColor="#ffffff"
                     autoCapitalize="none"
                     onChangeText={this.handleId}>
                 </TextInput>
                 <TextInput style={styles.inputContainer}
-                    underlineColorAndroid="transparent"
+                    underlineColorAndroid="rgba(0,0,0,0)"
                     placeholder="Password"
                     id="password"
-                    placeholderTextColor="#9a73ef"
+                    placeholderTextColor="#ffffff"
                     autoCapitalize="none"
                     onChangeText={this.handlePassword}>
                 </TextInput>
                 <TextInput style={styles.inputContainer}
-                    underlineColorAndroid="transparent"
+                    underlineColorAndroid="rgba(0,0,0,0)"
                     placeholder="Phone Number"
                     id="phoneNumber"
-                    placeholderTextColor="#9a73ef"
+                    placeholderTextColor="#ffffff"
                     autoCapitalize="none"
-                    onChangeText={this.handlePhoneNumber}>
+                    onChangeText={this.handlehandlePhoneNumberPassword}>
                 </TextInput>
-                <View style={styles.buttonContainer}>
-                    <Button
-                        onPress={this.handleSubmit}
-                        title="Connect"
-                        color="red"
-                    />
-                </View>
+                <TouchableOpacity style={styles.buttonContainer}>
+                    <Text style={styles.buttonText} onPress={this.handleSubmit}>CONNECT</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -122,24 +119,37 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#455a64',
         alignItems: 'center',
         justifyContent: 'center',
     },
     inputContainer: {
         width: width,
-        marginTop: 20,
-        height: 40,
+        backgroundColor: 'rgba(255,255,255,0.3)',
         borderColor: 'gray',
         borderWidth: 1,
-        borderRadius: 10,
+        borderRadius: 25,
+        paddingHorizontal: 16,
+        fontSize: 16,
+        color: '#ffffff',
+        marginVertical: 10,
     },
     buttonContainer: {
-        marginTop: 20,
+        backgroundColor: '#1c313a',
+        borderRadius: 25,
+        width: width,
+        marginVertical: 10,
+        paddingVertical: 13,
+      },
+      buttonText: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#ffffff',
+        textAlign: "center",
     },
     textContainer: {
         fontSize: 20,
-        color: "red",
+        color: "white",
     }
 });
 

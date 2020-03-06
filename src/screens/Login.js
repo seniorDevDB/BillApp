@@ -29,24 +29,24 @@ class Login extends React.Component {
   }
 
   handleLogIn = async () => {
-    const { dispatch, navigation: { navigate } } = this.props;
+    const { dispatch } = this.props;
     const { email, password } = this.state;
     console.log("ddddddddddddddddddddd", email);
     try {
       console.log("ddddddddddddddddddddd");
       await dispatch(signIn(email, password));
-      navigate("Home");
+      // navigate("Home");
     } catch (error) {
       console.log("dddddddddddddddddssssss",error);
     }
   }
 
   async componentDidMount() {
-    const { dispatch, navigation: { navigate }, auth} = this.props;
+    const { dispatch } = this.props;
     console.log("AUTH!!!!!!!!!!!!!!!!!!!!!:");
     try {
       await dispatch(isSignedIn());
-      navigate("Home");
+      // navigate("Home");
     } catch (error) {
       console.log("no token found, please sign in again.");
     }
@@ -77,7 +77,7 @@ class Login extends React.Component {
         </TextInput>
         {auth.errMsg.password || auth.errMsg.non_field_errors ? <Text>{auth.errMsg.password || auth.errMsg.non_field_errors}</Text> : <Fragment/>}
         <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText} onPress={this.handleLogIn}>Login</Text>
+          <Text style={styles.buttonText} onPress={this.handleLogIn}>NEXT</Text>
         </TouchableOpacity>
         <View style={styles.signupTextContainer}>
           <Text style={styles.signupText}>Don't have an account yet?</Text>

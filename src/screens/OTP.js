@@ -3,7 +3,9 @@ import {
   StyleSheet,
   TextInput,
   View,
-  Button
+  Button,
+  TouchableOpacity,
+  Text
 } from 'react-native';
 
 const width = '80%';
@@ -41,18 +43,16 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <TextInput style={styles.inputContainer}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Security PassCode"
-          placeholderTextColor="#9a73ef"
+          id="password"
+          placeholderTextColor="#ffffff"
           autoCapitalize="none"
           onChangeText={this.handleCode}>
         </TextInput>
-        <View style={styles.buttonContainer}>
-          <Button style={styles.buttonContainer}
-            onPress={this.handleSubmit}
-            title="Next"
-          />
-        </View>
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text style={styles.buttonText} onPress={this.handleSubmit}>NEXT</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -62,19 +62,33 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#455a64',
     alignItems: 'center',
     justifyContent: 'center',
   },
   inputContainer: {
     width: width,
-    height: 40,
+    backgroundColor: 'rgba(255,255,255,0.3)',
     borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 25,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: '#ffffff',
+    marginVertical: 10,
   },
   buttonContainer: {
-    marginTop:20,
-  }
+    backgroundColor: '#1c313a',
+    borderRadius: 25,
+    width: width,
+    marginVertical: 10,
+    paddingVertical: 13,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#ffffff',
+    textAlign: "center",
+  },
 });
 
