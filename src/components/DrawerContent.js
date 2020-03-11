@@ -11,14 +11,23 @@ import {
   Caption,
   Paragraph,
   Drawer,
-  Text,
-  TouchableRipple,
-  Switch,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
+import { signOut } from '../redux/actions/auth.action';
 
-export default function DrawerContent(props) {
+function DrawerContent(props) {
   const paperTheme = useTheme();
+
+  const logOut = async () => {
+    const { dispatch } = props;
+    try {
+      await dispatch(signOut());
+      console.log("drawerContent props ---> ", props);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   
   return (
     <DrawerContentScrollView {...props}>
@@ -33,7 +42,7 @@ export default function DrawerContent(props) {
             }}
             size={50}
           />
-          <Title style={styles.title}>Dawid Urbaniak</Title>
+          <Title style={styles.title}>Jordan Nemec</Title>
           <Caption style={styles.caption}>@trensik</Caption>
           <View style={styles.row}>
             <View style={styles.section}>
@@ -77,11 +86,11 @@ export default function DrawerContent(props) {
                 size={size}
               />
             )}
-            label="Bookmarks"
-            onPress={() => { }}
+            label="Logout"
+            onPress={logOut}
           />
         </Drawer.Section>
-        <Drawer.Section title="Preferences">
+        {/* <Drawer.Section title="Preferences">
           <TouchableRipple onPress={() => { }}>
             <View style={styles.preference}>
               <Text>Dark Theme</Text>
@@ -98,7 +107,7 @@ export default function DrawerContent(props) {
               </View>
             </View>
           </TouchableRipple>
-        </Drawer.Section>
+        </Drawer.Section> */}
       </View>
     </DrawerContentScrollView>
   );
@@ -143,3 +152,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
+
+const mapStateToProps = ({ auth }) => ({ auth });
+
+export default connect(mapStateToProps)(DrawerContent);

@@ -14,8 +14,8 @@ const width = '80%';
 export default class App extends React.Component {
 
     state = {
-        id: '',
-        password: '',
+        id: '4196511828',
+        password: 'T54dbTF67!',
         phone_number: '',
         b_credential: true,
     }
@@ -38,7 +38,7 @@ export default class App extends React.Component {
         data.append('password', this.state.password);
         data.append('phoneNumber', this.state.phone_number);
         // responseJson = {"amount": "377.03", "billDate": "Pay by Mar 17, 2020", "res": "success"};
-        fetch('http://13.92.168.44:8000/api/test/', {
+        fetch('http://13.92.168.44:8000/api/startLogin/', {
             method: 'POST',
             body: data,
         })
@@ -52,6 +52,26 @@ export default class App extends React.Component {
                 }
                 else if (responseJson.res == "code") {
                     this.props.navigation.navigate("OTP")
+                }
+                else if (responseJson.res == "error") {    // when error happends on the backend
+                    console.log("error happened on the backend");
+                }
+                else if (responseJson.res == "api_error") {
+                    Alert.alert(
+                        //title
+                        'Alert',
+                        //body
+                        'Api issue. Please Try Again.',
+                        [
+                            { text: 'Yes', onPress: () => console.log('Yes Pressed') },
+                            { text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel' },
+                        ],
+                        { cancelable: false }
+                        //clicking out side of alert will not cancel
+                    );
+                }
+                else if (responseJson.res == "phoneNumber") {
+                    this.props.navigation.navigate("PhoneNumber", { responseJson })
                 }
                 else {
                     this.props.navigation.navigate("Result", { responseJson })
@@ -87,6 +107,7 @@ export default class App extends React.Component {
                     underlineColorAndroid="rgba(0,0,0,0)"
                     placeholder="User ID"
                     id="userId"
+                    value={this.state.id}
                     placeholderTextColor="#ffffff"
                     autoCapitalize="none"
                     onChangeText={this.handleId}>
@@ -95,6 +116,7 @@ export default class App extends React.Component {
                     underlineColorAndroid="rgba(0,0,0,0)"
                     placeholder="Password"
                     id="password"
+                    value={this.state.password}
                     placeholderTextColor="#ffffff"
                     autoCapitalize="none"
                     onChangeText={this.handlePassword}>
@@ -140,8 +162,8 @@ const styles = StyleSheet.create({
         width: width,
         marginVertical: 10,
         paddingVertical: 13,
-      },
-      buttonText: {
+    },
+    buttonText: {
         fontSize: 16,
         fontWeight: '500',
         color: '#ffffff',

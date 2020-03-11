@@ -7,7 +7,7 @@ import {
 
 const width = '80%';
 
-export default class App extends React.Component {
+export default class Result extends React.Component {
 
   state = {
     url: '',

@@ -14,8 +14,8 @@ const width = '80%';
 class Login extends React.Component {
 
   state = {
-    email: '',
-    password: '',
+    email: 'tonytest@gmail.com',
+    password: 'Aa1234567890',
     errEmail: '',
     errPassword: '',
   }
@@ -60,6 +60,7 @@ class Login extends React.Component {
         <TextInput style={styles.inputContainer}
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Email"
+          value={email}
           id="email"
           placeholderTextColor="#ffffff"
           autoCapitalize="none"
@@ -70,6 +71,7 @@ class Login extends React.Component {
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Password"
           id="password"
+          value={password}
           secureTextEntry={true}
           placeholderTextColor="#ffffff"
           autoCapitalize="none"

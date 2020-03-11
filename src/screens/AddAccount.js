@@ -22,15 +22,14 @@ class AddAccount extends React.Component {
     this.setState({ url: text })
   }
 
-  logOut = async () => {
-    const { dispatch, navigation: { navigate } } = this.props;
-    try {
-      await dispatch(signOut());
-    } catch (error) {
-      console.log(error);
-    }
-    navigate("Login");
-  }
+  // logOut = async () => {
+  //   const { dispatch } = this.props;
+  //   try {
+  //     await dispatch(signOut());
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   render() {
     const { navigation, auth } = this.props;
@@ -50,11 +49,11 @@ class AddAccount extends React.Component {
               navigation.navigate("Connect");
             }}>NEXT</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer}>
+        {/* <TouchableOpacity style={styles.buttonContainer}>
           <Text style={styles.buttonText} onPress={this.logOut}>
             Log Out
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }

@@ -10,6 +10,7 @@ import AddAccount from "./screens/AddAccount";
 import Connect from "./screens/Connect";
 import OTP from "./screens/OTP";
 import Result from "./screens/Result";
+import PhoneNumber from "./screens/PhoneNumber";
 import { connect } from 'react-redux';
 
 const HomeStackNav = createStackNavigator();
@@ -19,8 +20,8 @@ function HomeScreen() {
         <HomeStackNav.Navigator
             headerMode="screen"
             screenOptions={{
-                header: ({ scene, previous, navigation }) => (
-                    <Header scene={scene} previous={previous} navigation={navigation} />
+                header: ({ scene, navigation }) => (
+                    <Header scene={scene} navigation={navigation} />
                 ),
             }}
         >
@@ -28,6 +29,7 @@ function HomeScreen() {
             <HomeStackNav.Screen name="Connect" component={Connect} />
             <HomeStackNav.Screen name="OTP" component={OTP} />
             <HomeStackNav.Screen name="Result" component={Result} />
+            {/* <HomeStackNav.Screen name="PhoneNumber" component={PhoneNumber} /> */}
         </HomeStackNav.Navigator>
     );
 }
