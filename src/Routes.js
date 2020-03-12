@@ -29,7 +29,7 @@ function HomeScreen() {
             <HomeStackNav.Screen name="Connect" component={Connect} />
             <HomeStackNav.Screen name="OTP" component={OTP} />
             <HomeStackNav.Screen name="Result" component={Result} />
-            {/* <HomeStackNav.Screen name="PhoneNumber" component={PhoneNumber} /> */}
+            <HomeStackNav.Screen name="PhoneNumber" component={PhoneNumber} />
         </HomeStackNav.Navigator>
     );
 }

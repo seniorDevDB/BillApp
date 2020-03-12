@@ -15,21 +15,14 @@ const width = '80%';
 class AddAccount extends React.Component {
 
   state = {
-    url: '',
+    url: 'att.com',
   }
 
   handleURL = (text) => {
     this.setState({ url: text })
+
   }
 
-  // logOut = async () => {
-  //   const { dispatch } = this.props;
-  //   try {
-  //     await dispatch(signOut());
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   render() {
     const { navigation, auth } = this.props;
@@ -40,20 +33,16 @@ class AddAccount extends React.Component {
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholder="Enter bank name or sign-in URL"
           id="bankUrl"
+          value= {this.state.url}
           placeholderTextColor="#ffffff"
           autoCapitalize="none"
           onChangeText={this.handleURL}>
         </TextInput>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity  style={styles.buttonContainer}>
           <Text style={styles.buttonText} onPress={() => {
               navigation.navigate("Connect");
             }}>NEXT</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText} onPress={this.logOut}>
-            Log Out
-          </Text>
-        </TouchableOpacity> */}
       </View>
     );
   }

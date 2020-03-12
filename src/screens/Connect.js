@@ -18,6 +18,7 @@ export default class App extends React.Component {
         password: 'T54dbTF67!',
         phone_number: '',
         b_credential: true,
+        b_disable: false,
     }
 
     handleId = (text) => {
@@ -33,6 +34,8 @@ export default class App extends React.Component {
     }
 
     handleSubmit = () => {
+        this.setState({b_disable: true});
+        console.log("okokok");
         const data = new FormData();
         data.append('userId', this.state.id);
         data.append('password', this.state.password);
@@ -48,15 +51,19 @@ export default class App extends React.Component {
                 console.log(responseJson.billDate);
                 console.log(responseJson.amount);
                 if (responseJson.res == "credentialInvalid") {
+                    this.setState({b_disable: false});
                     this.setState({ b_credential: false });
                 }
                 else if (responseJson.res == "code") {
+                    this.setState({b_disable: false});
                     this.props.navigation.navigate("OTP")
                 }
                 else if (responseJson.res == "error") {    // when error happends on the backend
+                    this.setState({b_disable: false});
                     console.log("error happened on the backend");
                 }
                 else if (responseJson.res == "api_error") {
+                    this.setState({b_disable: false});
                     Alert.alert(
                         //title
                         'Alert',
@@ -71,13 +78,16 @@ export default class App extends React.Component {
                     );
                 }
                 else if (responseJson.res == "phoneNumber") {
+                    this.setState({b_disable: false});
                     this.props.navigation.navigate("PhoneNumber", { responseJson })
                 }
                 else {
+                    this.setState({b_disable: false});
                     this.props.navigation.navigate("Result", { responseJson })
                 }
             })
             .catch((error) => {
+                this.setState({b_disable: false});
                 console.log(error);
                 Alert.alert(
                     //title
@@ -130,7 +140,7 @@ export default class App extends React.Component {
                     onChangeText={this.handlehandlePhoneNumberPassword}>
                 </TextInput>
                 <TouchableOpacity style={styles.buttonContainer}>
-                    <Text style={styles.buttonText} onPress={this.handleSubmit}>CONNECT</Text>
+                    <Text disabled={this.state.b_disable} style={styles.buttonText} onPress={this.handleSubmit}>CONNECT</Text>
                 </TouchableOpacity>
             </View>
         );

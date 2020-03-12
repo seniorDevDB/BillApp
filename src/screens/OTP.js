@@ -12,8 +12,18 @@ const width = '80%';
 
 export default class App extends React.Component {
 
-  state = {
-    code: '',
+  constructor(props) {
+    super(props);
+    thisstate = {
+      code: '',
+      profile_uuid: '',
+    }
+  }
+
+  componentDidMount() {
+    const {route} = this.props;
+    console.log(route.params);
+    this.setState({ profile_uuid: route.params.responseJson.uuid })
   }
 
   handleCode = (text) => {
@@ -23,6 +33,7 @@ export default class App extends React.Component {
   handleSubmit = () => {
     const data = new FormData();
     data.append('code',this.state.code);
+    data.append('uuid', this.state.profile_uuid);
     fetch('http://13.92.168.44:8000/api/opt/', {
       method: 'POST',
       body: data,
