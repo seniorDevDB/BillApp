@@ -76,9 +76,8 @@ export default class App extends React.Component {
             {cancelable: false},
             //clicking out side of alert will not cancel
           );
-        } else if (responseJson.res == 'code') {
-          this.setState({b_disable: false});
-          this.props.navigation.navigate('OTP');
+        } else if (responseJson.res == ERR_KEYWORDS.INITIALCONNECTION_ERROR) {
+          this.handleAlert(ERR_KEYWORDS.INITIALCONNECTION_ERROR);
         } else if (responseJson.res == 'error') {
           // when error happends on the backend
           this.setState({b_disable: false});
@@ -104,6 +103,10 @@ export default class App extends React.Component {
         } else if (responseJson.res == 'phoneNumber') {
           this.setState({b_disable: false});
           this.props.navigation.navigate('PhoneNumber', {responseJson});
+        } else if (
+          responseJson.billDate == ERR_KEYWORDS.GET_PHONENUMBER_ERROR
+        ) {
+          this.handleAlert(ERR_KEYWORDS.GET_PHONENUMBER_ERROR);
         } else {
           this.setState({b_disable: false});
           this.props.navigation.navigate('Result', {responseJson});
@@ -129,6 +132,25 @@ export default class App extends React.Component {
           //clicking out side of alert will not cancel
         );
       });
+  };
+
+  handleAlert = words => {
+    Alert.alert(
+      //title
+      'Alert',
+      //body
+      words,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            console.log("initial connection error");
+          },
+        },
+      ],
+      {cancelable: false},
+      //clicking out side of alert will not cancel
+    );
   };
 
   render() {

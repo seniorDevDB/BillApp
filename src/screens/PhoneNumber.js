@@ -8,6 +8,7 @@ import {
   Alert,
   TouchableHighlight,
 } from 'react-native';
+import {ERR_KEYWORDS} from '../constants';
 
 export default class PhoneNumber extends React.Component {
   // state = {
@@ -54,8 +55,10 @@ export default class PhoneNumber extends React.Component {
   componentDidMount() {
     const {route} = this.props;
     console.log(route.params);
+    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({data: route.params.responseJson.billDate});
-    this.setState({profile_uuid: route.params.responseJson.uuid});
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({profile_uuid: route.params.responseJson.amount});
   }
 
   // update state
@@ -75,9 +78,19 @@ export default class PhoneNumber extends React.Component {
       })
       .then(responseJson => {
         console.log(responseJson);
-        responseJson.res == 'phone'
-          ? this.props.navigation.navigate('OTP', {responseJson})
-          : console.log('phone number error');
+        // responseJson.res == ERR_KEYWORDS.OTP_CODE
+        //   ? this.props.navigation.navigate('OTP', {responseJson})
+        //   : console.log(responseJson.res);
+        if (responseJson.res == ERR_KEYWORDS.OTP_CODE) {
+          this.props.navigation.navigate('OTP', {responseJson});
+        } else if (
+          responseJson.res == ERR_KEYWORDS.PHONE_NUMBER_LOADING_ERROR
+        ) {
+          this.handleAlert(ERR_KEYWORDS.PHONE_NUMBER_LOADING_ERROR);
+          this.props.navigation.navigate('Connect', {responseJson});
+        } else {
+          this.handleAlert();
+        }
       })
       .catch(error => {
         console.log(error);
@@ -98,6 +111,25 @@ export default class PhoneNumber extends React.Component {
           //clicking out side of alert will not cancel
         );
       });
+  };
+
+  handleAlert = words => {
+    Alert.alert(
+      //title
+      'Alert',
+      //body
+      words,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            this.props.navigation.navigate('Connect');
+          },
+        },
+      ],
+      {cancelable: false},
+      //clicking out side of alert will not cancel
+    );
   };
 
   render() {

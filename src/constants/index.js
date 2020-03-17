@@ -19,4 +19,10 @@ export const ERR_KEYWORDS = {
   CONNECTION_ERROR: 'Connection Error',
   BALANCE_ERROR: 'Balance Error',
   SIGNOUT_ERROR: 'Signout Error',
+  OTP_CODE: 'OTP code',
+  OTP_LOADING_ERROR: 'OTP Page Loading Error',
+  PHONE_NUMBER_LOADING_ERROR: 'Phone Number Loading Error',
+  GET_PHONENUMBER_ERROR: 'Get Phone Number Error',
+  INITIALCONNECTION_ERROR: 'Initial Connection Error',
+  GET_BALANCE_SUCCESS: 'Balance success',
 };
