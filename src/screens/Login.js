@@ -64,7 +64,8 @@ class Login extends React.Component {
           id="email"
           placeholderTextColor="#ffffff"
           autoCapitalize="none"
-          onChangeText={this.handleEmail}></TextInput>
+          onChangeText={this.handleEmail}
+        />
         {auth.errMsg.email || auth.errMsg.non_field_errors ? (
           <Text>{auth.errMsg.email || auth.errMsg.non_field_errors}</Text>
         ) : (
@@ -79,7 +80,8 @@ class Login extends React.Component {
           secureTextEntry={true}
           placeholderTextColor="#ffffff"
           autoCapitalize="none"
-          onChangeText={this.handlePassword}></TextInput>
+          onChangeText={this.handlePassword}
+        />
         {auth.errMsg.password || auth.errMsg.non_field_errors ? (
           <Text>{auth.errMsg.password || auth.errMsg.non_field_errors}</Text>
         ) : (

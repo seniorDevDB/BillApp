@@ -25,4 +25,5 @@ export const ERR_KEYWORDS = {
   GET_PHONENUMBER_ERROR: 'Get Phone Number Error',
   INITIALCONNECTION_ERROR: 'Initial Connection Error',
   GET_BALANCE_SUCCESS: 'Balance success',
+  REFRESHCONNECTION_ERROR: 'Refresh Connection Error',
 };

@@ -1,61 +1,61 @@
-import axios from "axios";
-import APIPath from "../utils/fetchUrls"
+import axios from 'axios';
+import APIPath from '../utils/fetchUrls';
 
 export const signin = (email, password) => {
-    var bodyFormData = new FormData();
-    bodyFormData.append("email", email);
-    bodyFormData.append("password", password);
-    const response = axios({
-        method: "post",
+  var bodyFormData = new FormData();
+  bodyFormData.append('email', email);
+  bodyFormData.append('password', password);
+  const response = axios({
+    method: 'post',
 
-        url: APIPath.root_url + `/api/accounts/auth/login/`,
+    url: APIPath.root_url + `/api/accounts/auth/login/`,
 
-        headers: { "Content-Type": "application/json" },
+    headers: {'Content-Type': 'application/json'},
 
-        data: bodyFormData
-    });
-    return response;
-}
+    data: bodyFormData,
+  });
+  return response;
+};
 
 export const signout = () => {
-    var bodyFormData = new FormData();
-    const response = axios({
-        method: "post",
+  var bodyFormData = new FormData();
+  const response = axios({
+    method: 'post',
 
-        url: APIPath.root_url + `/api/accounts/auth/login/`,
+    url: APIPath.root_url + `/api/accounts/auth/login/`,
 
-        headers: { "Content-Type": "application/json" },
+    headers: {'Content-Type': 'application/json'},
 
-        data: bodyFormData
-    });
-    console.log("dsdaaaaaaaaaaaaaaaaaaaaaaaaa", response);
-    return response;
-}
+    data: bodyFormData,
+  });
+  console.log('dsdaaaaaaaaaaaaaaaaaaaaaaaaa', response);
+  return response;
+};
 
 export const signup = (firstname, lastname, email, password1, password2) => {
-    var bodyFormData = new FormData();
-    bodyFormData.append("firstname", firstname);
-    bodyFormData.append("lastname", lastname);
-    bodyFormData.append("email", email);
-    bodyFormData.append("password1", password1);
-    bodyFormData.append("password2", password2);
-    console.log(APIPath.root_url, bodyFormData);
-    const response = axios({
-        method: "post",
+  var bodyFormData = new FormData();
+  bodyFormData.append('firstname', firstname);
+  bodyFormData.append('lastname', lastname);
+  bodyFormData.append('email', email);
+  bodyFormData.append('password1', password1);
+  bodyFormData.append('password2', password2);
+  console.log(APIPath.root_url, bodyFormData);
+  const response = axios({
+    method: 'post',
 
-        url: APIPath.root_url + `/api/accounts/auth/register/`,
+    url: APIPath.root_url + `/api/accounts/auth/register/`,
 
-        headers: { "Content-Type": "application/json" },
+    headers: {'Content-Type': 'application/json'},
 
-        data: bodyFormData
-    });
-    console.log("here we have")
-    console.log(response.data)
-    return response;
-}
+    data: bodyFormData,
+  });
+  console.log('here we have');
+  console.log(response.data);
+  return response;
+};
 
 export default {
-    signin,
-    signout,
-    signup,
+  signin,
+  signout,
+  signup,
 };

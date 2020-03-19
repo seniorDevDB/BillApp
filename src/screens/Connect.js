@@ -17,8 +17,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '4196511828',
-      password: 'T54dbTF67!',
+      id: 'nemec805',
+      password: 'Jamesford1',
       phone_number: '',
       site_url: props.route.params.url,
       b_credential: true,
@@ -67,23 +67,15 @@ export default class App extends React.Component {
           this.setState({b_disable: false});
           this.setState({b_credential: false});
         } else if (responseJson.res == ERR_KEYWORDS.DO_INITIAL_CONNECTION) {
-          Alert.alert(
-            //title
-            'Alert',
-            //body
-            'It will ask OTP again.',
-            [{text: 'OK', onPress: () => console.log('Yes Pressed')}],
-            {cancelable: false},
-            //clicking out side of alert will not cancel
-          );
+          this.handleAlert(ERR_KEYWORDS.DO_INITIAL_CONNECTION);
+        } else if (responseJson.res == ERR_KEYWORDS.REFRESHCONNECTION_ERROR) {
+          this.handleAlert('You have to do initial connection');
         } else if (responseJson.res == ERR_KEYWORDS.INITIALCONNECTION_ERROR) {
           this.handleAlert(ERR_KEYWORDS.INITIALCONNECTION_ERROR);
         } else if (responseJson.res == 'error') {
           // when error happends on the backend
-          this.setState({b_disable: false});
           console.log('error happened on the backend');
         } else if (responseJson.res == 'api_error') {
-          this.setState({b_disable: false});
           Alert.alert(
             //title
             'Alert',
@@ -101,19 +93,19 @@ export default class App extends React.Component {
             //clicking out side of alert will not cancel
           );
         } else if (responseJson.res == 'phoneNumber') {
-          this.setState({b_disable: false});
           this.props.navigation.navigate('PhoneNumber', {responseJson});
         } else if (
           responseJson.billDate == ERR_KEYWORDS.GET_PHONENUMBER_ERROR
         ) {
           this.handleAlert(ERR_KEYWORDS.GET_PHONENUMBER_ERROR);
+        } else if (responseJson.res == 'success') {
+          console.log('here we want this ssss');
+          this.props.navigation.navigate('Result', {responseJson});
         } else {
-          this.setState({b_disable: false});
           this.props.navigation.navigate('Result', {responseJson});
         }
       })
       .catch(error => {
-        this.setState({b_disable: false});
         console.log(error);
         Alert.alert(
           //title
@@ -144,7 +136,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: () => {
-            console.log("initial connection error");
+            console.log('initial connection error');
           },
         },
       ],
