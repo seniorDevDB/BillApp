@@ -75,9 +75,51 @@ export const paymentDateBack = uuid => {
   return response;
 };
 
+export const paymentMethodBack = uuid => {
+  console.log("PaymentReviewBack");
+  var bodyFormData = new FormData();
+  bodyFormData.append('uuid', uuid);
+  console.log('back clcicked in api');
+  const response = axios({
+    method: 'post',
+
+    url: APIPath.root_url + `/api/paymentMethodBack/`,
+
+    headers: {'Content-Type': 'application/json'},
+
+    data: bodyFormData,
+  });
+  console.log('here we have');
+  console.log(response.data);
+  return response;
+};
+
+export const paymentMethod = (uuid, method) => {
+  var bodyFormData = new FormData();
+  bodyFormData.append('uuid', uuid);
+  bodyFormData.append('status', method.status);
+  bodyFormData.append('first', method.first);
+  bodyFormData.append('second', method.second);
+  console.log(APIPath.root_url, bodyFormData);
+  const response = axios({
+    method: 'post',
+
+    url: APIPath.root_url + `/api/paymentMethod/`,
+
+    headers: {'Content-Type': 'application/json'},
+
+    data: bodyFormData,
+  });
+  console.log('here we have');
+  console.log(response.data);
+  return response;
+};
+
 export default {
   makePayment,
   paymentAmount,
   paymentDate,
   paymentDateBack,
+  paymentMethodBack,
+  paymentMethod,
 };

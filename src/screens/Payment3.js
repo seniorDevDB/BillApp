@@ -17,10 +17,11 @@ export default class Payment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'dd',
-      paymentAmount: '',
       profile_uuid: '',
-      date: '02/15/20',
+      card_number: '4403 9314 5598 8551',
+      expiration_date: '03/23',
+      routing_number: '',
+      account_number: '',
       data: [
         {
           label: 'Credit/Debit Card',
@@ -42,47 +43,56 @@ export default class Payment extends React.Component {
     };
   }
 
-  //   componentDidMount() {
-  //     const {route} = this.props;
-  //     console.log('here is date date date', this.state.date);
-  //     console.log('here is what we can do', route.params.response.data.todayDate);
-  //     this.setState({profile_uuid: route.params.response.data.uuid});
-  //     this.setState({date: route.params.response.data.todayDate.split(': ')[1]});
-  //     console.log(route.params.response.data.todayDate.split(': ')[1]);
-  //     let temp = [...this.state.data];
-  //     temp[0].label = route.params.response.data.todayDate;
-  //     temp[1].label = route.params.response.data.otherDate;
-  //     this.setState({data: temp});
-  //   }
+  componentDidMount() {
+    const {route} = this.props;
+    console.log('here is date date date', this.state.date);
+    this.setState({profile_uuid: route.params.response.data.uuid});
+  }
 
-  //   handleBack = async () => {
-  //     console.log('back clicked');
-  //     try {
-  //       const response = await apiService.paymentDateBack(
-  //         this.state.profile_uuid,
-  //       );
-  //       console.log('wrherewalrjeklwjrfkdlsjfldjsafl', response.data);
-  //       this.props.navigation.navigate('Payment1', {response});
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+  handleBack = async () => {
+    console.log('back clicked');
+    try {
+      const response = await apiService.paymentMethodBack(
+        this.state.profile_uuid,
+      );
+      console.log('wrherewalrjeklwjrfkdlsjfldjsafl', response.data);
+      this.props.navigation.navigate('PaymentReview', {response});
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  //   handlePaymentDateContinue = async () => {
-  //     try {
-  //       const response = await apiService.paymentDate(
-  //         this.state.profile_uuid,
-  //         this.state.data[0].selected,
-  //         this.state.date,
-  //       );
-  //       console.log('this is response data', response.data);
-  //       if (response.data.res === 'date_success') {
-  //         this.props.navigation.navigate('Payment3');
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+  handlePaymentMethodContinue = async () => {
+    if (this.state.data[0].selected) {
+      var paymentMethod = {}; // we can encrypt info here
+      paymentMethod.status = 'credit';
+      paymentMethod.first = this.state.card_number;
+      paymentMethod.second = this.state.expiration_date;
+    } else if (this.state.data[1].selected) {
+      var paymentMethod = {}; // we can encrypt info here
+      paymentMethod.status = 'checking';
+      paymentMethod.first = this.state.routing_number;
+      paymentMethod.second = this.state.account_number;
+    } else if (this.state.data[2].selected) {
+      var paymentMethod = {}; // we can encrypt info here
+      paymentMethod.status = 'savings';
+      paymentMethod.first = this.state.routing_number;
+      paymentMethod.second = this.state.account_number;
+    }
+    console.log('method clicked dd', paymentMethod);
+    try {
+      const response = await apiService.paymentMethod(
+        this.state.profile_uuid,
+        paymentMethod,
+      );
+      console.log('this is response data', response.data);
+      if (response.data.res === 'method_success') {
+        this.props.navigation.navigate('PaymentReview');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // update state
   onPress = data => this.setState({data});
@@ -102,22 +112,22 @@ export default class Payment extends React.Component {
               <TextInput
                 underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="Card Number"
-                id="paymentAmount"
-                value={this.state.paymentAmount}
+                id="cardNumber"
+                value={this.state.card_number}
                 placeholderTextColor="#ffffff"
                 autoCapitalize="none"
-                onChangeText={this.handlePaymentAmount}
+                onChangeText={text => this.setState({card_number: text})}
               />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="Expiration Date MM/YY"
-                id="paymentAmount"
-                value={this.state.paymentAmount}
+                id="expirationDate"
+                value={this.state.expiration_date}
                 placeholderTextColor="#ffffff"
                 autoCapitalize="none"
-                onChangeText={this.handlePaymentAmount}
+                onChangeText={text => this.setState({expiration_date: text})}
               />
             </View>
           </View>
@@ -130,22 +140,22 @@ export default class Payment extends React.Component {
               <TextInput
                 underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="Routing Number"
-                id="paymentAmount"
-                value={this.state.paymentAmount}
+                id="routingNumber"
+                value={this.state.routing_number}
                 placeholderTextColor="#ffffff"
                 autoCapitalize="none"
-                onChangeText={this.handlePaymentAmount}
+                onChangeText={text => this.setState({routing_number: text})}
               />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="Account Number"
-                id="paymentAmount"
-                value={this.state.paymentAmount}
+                id="accountNumber"
+                value={this.state.account_number}
                 placeholderTextColor="#ffffff"
                 autoCapitalize="none"
-                onChangeText={this.handlePaymentAmount}
+                onChangeText={text => this.setState({account_number: text})}
               />
             </View>
           </View>
@@ -158,20 +168,20 @@ export default class Payment extends React.Component {
               <TextInput
                 underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="Routing Number"
-                value={this.state.paymentAmount}
+                value={this.state.routing_number}
                 placeholderTextColor="#ffffff"
                 autoCapitalize="none"
-                onChangeText={this.handlePaymentAmount}
+                onChangeText={text => this.setState({routing_number: text})}
               />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="Account Number"
-                value={this.state.paymentAmount}
+                value={this.state.account_number}
                 placeholderTextColor="#ffffff"
                 autoCapitalize="none"
-                onChangeText={this.handlePaymentAmount}
+                onChangeText={text => this.setState({account_number: text})}
               />
             </View>
           </View>
@@ -186,7 +196,7 @@ export default class Payment extends React.Component {
         <TouchableOpacity style={styles.buttonContainer}>
           <Text
             style={styles.buttonText}
-            onPress={this.handlePaymentDateContinue}>
+            onPress={this.handlePaymentMethodContinue}>
             Continue
           </Text>
         </TouchableOpacity>

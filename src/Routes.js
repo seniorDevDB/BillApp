@@ -15,6 +15,7 @@ import {connect} from 'react-redux';
 import Payment1 from './screens/Payment1';
 import Payment2 from './screens/Payment2';
 import Payment3 from './screens/Payment3';
+import PaymentReview from './screens/PaymentReview';
 
 const HomeStackNav = createStackNavigator();
 
@@ -27,7 +28,6 @@ function HomeScreen() {
           <Header scene={scene} navigation={navigation} />
         ),
       }}>
-      <HomeStackNav.Screen name="Payment3" component={Payment3} />
       <HomeStackNav.Screen name="AddAccount" component={AddAccount} />
       <HomeStackNav.Screen name="Connect" component={Connect} />
       <HomeStackNav.Screen name="OTP" component={OTP} />
@@ -35,7 +35,8 @@ function HomeScreen() {
       <HomeStackNav.Screen name="PhoneNumber" component={PhoneNumber} />
       <HomeStackNav.Screen name="Payment1" component={Payment1} />
       <HomeStackNav.Screen name="Payment2" component={Payment2} />
-      {/* <HomeStackNav.Screen name="Payment3" component={Payment3} /> */}
+      <HomeStackNav.Screen name="Payment3" component={Payment3} />
+      <HomeStackNav.Screen name="PaymentReview" component={PaymentReview} />
     </HomeStackNav.Navigator>
   );
 }
