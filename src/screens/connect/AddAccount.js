@@ -9,7 +9,12 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
-import SITE_LINKS from '../constants';
+import SITE_LINKS from '../../constants';
+// import md5 from 'md5';
+// const nacl = require('tweetnacl');
+// const utils = require('tweetnacl-util');
+// const encodeBase64 = utils.encodeBase64;
+// global.Buffer = global.Buffer || require('buffer').Buffer;
 
 const width = '80%';
 
@@ -32,6 +37,21 @@ class AddAccount extends React.Component {
       'linkedin.com',
     ],
   };
+
+  componentDidMount() {
+    // // Our nonce must be a 24 bytes Buffer (or Uint8Array)
+    // const nonce = nacl.randomBytes(24);
+    // // Our secret key must be a 32 bytes Buffer (or Uint8Array)
+    // // eslint-disable-next-line no-undef
+    // const secretKey = Buffer.from('_THIS_IS_MY_32_CHARS_SECRET_KEY_', 'utf8');
+    // // Make sure your data is also a Buffer of Uint8Array
+    // // eslint-disable-next-line no-undef
+    // const secretData = Buffer.from('Some Italians hate wine', 'utf8');
+    // const encrypted = nacl.secretbox(secretData, nonce, secretKey);
+    // // We can now store our encrypted result and our nonce somewhere
+    // const result = `${encodeBase64(nonce)}:${encodeBase64(encrypted)}`;
+    // console.log(result);
+  }
 
   handleConnect = url => {
     if (!url.trim()) {

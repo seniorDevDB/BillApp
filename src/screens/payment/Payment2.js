@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import RadioGroup from 'react-native-radio-buttons-group';
 import DatePicker from 'react-native-datepicker';
-import {ERR_KEYWORDS} from '../constants';
-import {apiService} from '../services';
+import {ERR_KEYWORDS} from '../../constants';
+import {apiService} from '../../services';
 
 export default class Payment extends React.Component {
   constructor(props) {

@@ -19,9 +19,13 @@
     "@react-navigation/native": "^5.0.8",
     "@react-navigation/stack": "^5.1.0",
     "axios": "^0.19.2",
+    "buffer": "^5.5.0",
+    "crypto-js": "^4.0.0",
+    "md5": "^2.2.1",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-autocomplete-input": "^4.2.0-rc.2",
+    "react-native-crypto-js": "^1.0.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-paper": "^3.6.0",
@@ -34,7 +38,9 @@
     "react-native-vector-icons": "^6.6.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

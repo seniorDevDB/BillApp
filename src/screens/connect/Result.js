@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
-import {apiService} from '../services/';
+import {apiService} from '../../services';
 
 const width = '80%';
 
@@ -28,15 +28,15 @@ export default class Result extends React.Component {
   };
 
   handleMakePayment = async () => {
-    console.log("make payment");
+    console.log('make payment');
     try {
       const response = await apiService.makePayment(this.state.profile_uuid);
       console.log(response.data);
-      if (response.data.res === "success"){
+      if (response.data.res === 'success') {
         this.props.navigation.navigate('Payment1', {response});
       }
     } catch (error) {
-      console.log("this is error");
+      console.log('this is error');
       console.log(error);
     }
   };

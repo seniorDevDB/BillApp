@@ -8,8 +8,8 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import {ERR_KEYWORDS} from '../constants';
-import {apiService} from '../services';
+import {ERR_KEYWORDS} from '../../constants';
+import {apiService} from '../../services';
 
 export default class Payment extends React.Component {
   constructor(props) {

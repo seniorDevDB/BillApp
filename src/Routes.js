@@ -1,21 +1,21 @@
-import React, { Fragment } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import React, {Fragment} from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
-import DrawerContent from "./components/DrawerContent";
-import Header from "./components/Header";
-import Login from "./screens/Login";
-import Signup from "./screens/Signup";
-import AddAccount from "./screens/AddAccount";
-import Connect from "./screens/Connect";
-import OTP from "./screens/OTP";
-import Result from "./screens/Result";
-import PhoneNumber from "./screens/PhoneNumber";
+import DrawerContent from './components/DrawerContent';
+import Header from './components/Header';
+import Login from './screens/signup/Login';
+import Signup from './screens/signup/Signup';
+import AddAccount from './screens/connect/AddAccount';
+import Connect from './screens/connect/Connect';
+import OTP from './screens/connect/OTP';
+import Result from './screens/connect/Result';
+import PhoneNumber from './screens/connect/PhoneNumber';
 import {connect} from 'react-redux';
-import Payment1 from './screens/Payment1';
-import Payment2 from './screens/Payment2';
-import Payment3 from './screens/Payment3';
-import PaymentReview from './screens/PaymentReview';
+import Payment1 from './screens/payment/Payment1';
+import Payment2 from './screens/payment/Payment2';
+import Payment3 from './screens/payment/Payment3';
+import PaymentReview from './screens/payment/PaymentReview';
 
 const HomeStackNav = createStackNavigator();
 
@@ -59,17 +59,16 @@ function NavigationScreens({token}) {
       screenOptions={{
         headerShown: false,
       }}>
-            {token
-                ? (<AppStackNav.Screen name="Main" component={Main} />)
-                : (
-                    <Fragment>
-                        <AppStackNav.Screen name="Login" component={Login} />
-                        <AppStackNav.Screen name="Signup" component={Signup} />
-                    </Fragment>
-                )
-            }
-        </AppStackNav.Navigator>
-    );
+      {token ? (
+        <AppStackNav.Screen name="Main" component={Main} />
+      ) : (
+        <Fragment>
+          <AppStackNav.Screen name="Login" component={Login} />
+          <AppStackNav.Screen name="Signup" component={Signup} />
+        </Fragment>
+      )}
+    </AppStackNav.Navigator>
+  );
 }
 
 function mapStateToProps(state) {

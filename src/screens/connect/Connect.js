@@ -1,17 +1,16 @@
 /* eslint-disable eqeqeq */
-import React from 'react';
+import React, {Fragment} from 'react';
 import {
   StyleSheet,
   TextInput,
   View,
-  Button,
   Alert,
   Text,
   TouchableOpacity,
 } from 'react-native';
+import styles from '../utils/style';
 import {ERR_KEYWORDS} from '../constants';
-
-const width = '80%';
+import AnimatedProgressWheel from 'react-native-progress-wheel';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -23,11 +22,12 @@ export default class App extends React.Component {
       site_url: props.route.params.url,
       b_credential: true,
       b_disable: false,
+      b_progress_circle: false,
     };
   }
 
   componentDidMount() {
-    console.log("dfafdfdgdfsfd", ERR_KEYWORDS);
+    console.log('dfafdfdgdfsfd', ERR_KEYWORDS);
   }
 
   handleId = text => {
@@ -45,6 +45,7 @@ export default class App extends React.Component {
   handleSubmit = () => {
     this.setState({b_disable: true});
     console.log('okokok');
+    this.setState({b_progress_circle: true});
     const data = new FormData();
     data.append('userId', this.state.id);
     data.append('password', this.state.password);
@@ -57,6 +58,7 @@ export default class App extends React.Component {
     })
       .then(response => {
         console.log(response);
+        this.setState({b_disable: false});
         return response.json();
       })
       .then(responseJson => {
@@ -198,44 +200,69 @@ export default class App extends React.Component {
             CONNECT
           </Text>
         </TouchableOpacity>
+        <View style={styles.progressBar}>
+          {this.state.b_progress_circle ? (
+            <AnimatedProgressWheel
+              size={120}
+              width={20}
+              progress={100}
+              animateFromValue={0}
+              duration={10000}
+              color={'#1c313a'}
+              fullColor={'#204051'}
+              repeat={'true'}
+            />
+          ) : (
+            <Fragment />
+          )}
+        </View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#455a64',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputContainer: {
-    width: width,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 25,
-    paddingHorizontal: 16,
-    fontSize: 16,
-    color: '#ffffff',
-    marginVertical: 10,
-  },
-  buttonContainer: {
-    backgroundColor: '#1c313a',
-    borderRadius: 25,
-    width: width,
-    marginVertical: 10,
-    paddingVertical: 13,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#ffffff',
-    textAlign: 'center',
-  },
-  textContainer: {
-    fontSize: 20,
-    color: 'white',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#455a64',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   inputContainer: {
+//     width: width,
+//     backgroundColor: 'rgba(255,255,255,0.3)',
+//     borderColor: 'gray',
+//     borderWidth: 1,
+//     borderRadius: 25,
+//     paddingHorizontal: 16,
+//     fontSize: 16,
+//     color: '#ffffff',
+//     marginVertical: 10,
+//   },
+//   buttonContainer: {
+//     backgroundColor: '#1c313a',
+//     borderRadius: 25,
+//     width: width,
+//     marginVertical: 10,
+//     paddingVertical: 13,
+//   },
+//   buttonText: {
+//     fontSize: 16,
+//     fontWeight: '500',
+//     color: '#ffffff',
+//     textAlign: 'center',
+//   },
+//   textContainer: {
+//     fontSize: 20,
+//     color: 'white',
+//   },
+//   progressBar: {
+//     position: 'absolute',
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+// });
