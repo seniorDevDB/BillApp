@@ -1,9 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import {
-  DrawerItem,
-  DrawerContentScrollView,
-} from '@react-navigation/drawer';
+import {View, StyleSheet} from 'react-native';
+import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
 import {
   useTheme,
   Avatar,
@@ -13,27 +10,25 @@ import {
   Drawer,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
-import { signOut } from '../redux/actions/auth.action';
+import {connect} from 'react-redux';
+import {signOut} from '../redux/actions/auth.action';
 
 function DrawerContent(props) {
   const paperTheme = useTheme();
 
   const logOut = async () => {
-    const { dispatch } = props;
+    const {dispatch} = props;
     try {
       await dispatch(signOut());
-      console.log("drawerContent props ---> ", props);
+      console.log('drawerContent props ---> ', props);
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   return (
     <DrawerContentScrollView {...props}>
-      <View
-        style={styles.drawerContent}
-      >
+      <View style={styles.drawerContent}>
         <View style={styles.userInfoSection}>
           <Avatar.Image
             source={{
@@ -61,30 +56,22 @@ function DrawerContent(props) {
         </View>
         <Drawer.Section style={styles.drawerSection}>
           <DrawerItem
-            icon={({ color, size }) => (
-              <Icon
-                name="account-outline"
-                color={color}
-                size={size}
-              />
+            icon={({color, size}) => (
+              <Icon name="account-outline" color={color} size={size} />
             )}
             label="Profile"
-            onPress={() => { }}
+            onPress={() => {}}
           />
           <DrawerItem
-            icon={({ color, size }) => (
+            icon={({color, size}) => (
               <Icon name="tune" color={color} size={size} />
             )}
             label="Preferences"
-            onPress={() => { }}
+            onPress={() => {}}
           />
           <DrawerItem
-            icon={({ color, size }) => (
-              <Icon
-                name="bookmark-outline"
-                color={color}
-                size={size}
-              />
+            icon={({color, size}) => (
+              <Icon name="bookmark-outline" color={color} size={size} />
             )}
             label="Logout"
             onPress={logOut}
@@ -153,6 +140,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ auth }) => ({ auth });
+const mapStateToProps = ({auth}) => ({auth});
 
 export default connect(mapStateToProps)(DrawerContent);

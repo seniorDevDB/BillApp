@@ -8,6 +8,8 @@ import {
   View,
 } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
+import {apiService} from '../../services';
+import { Left } from 'native-base';
 
 export default class Bill extends Component {
   constructor(props) {
@@ -15,9 +17,9 @@ export default class Bill extends Component {
     // eslint-disable-next-line no-undef
     this.state = {
       listData: [
-        {text: 'att.com', key: '1'},
-        {text: 'spectrum.net', key: '2'},
-        {text: 'consumersenergy', key: '3'},
+        {text: 'att.com',balance_amount: '', balance_date: '', key: '1'},
+        {text: 'spectrum.net',balance_amount: '', balance_date: '', key: '2'},
+        {text: 'consumersenergy',balance_amount: '', balance_date: '', key: '3'},
       ],
     };
   }
@@ -26,7 +28,24 @@ export default class Bill extends Component {
     const {navigation, route, auth} = this.props;
     const listData = [...this.state.listData];
     const index = this.state.listData.length;
-    // listData.push({text: route.params.url, key: index + 1});
+    // listData.push({text: route.params.site, key: index + 1});
+    this.setState({listData});
+
+    // connect to backend
+    this.getBillInfo();
+
+  }
+
+  getBillInfo = async () => {
+    console.log("39393933939399339");
+    const response = await apiService.getBill();
+    console.log("responsesesesese", response.data);
+    const data = response.data;
+    const listData = [...this.state.listData];
+    const index = this.state.listData.length;
+    for(let i = 0; i < response.data.length; i ++){
+      listData.push({text: data[i].site, balance_amount: data[i].balance_amount, balance_date: data[i].balance_date, key: index + 1 + i})
+    }
     this.setState({listData});
   }
 
@@ -58,6 +77,10 @@ export default class Bill extends Component {
       underlayColor={'#AAA'}>
       <View>
         <Text style={styles.billText}>{data.item.text}</Text>
+        <View style= {{flexDirection: 'row', alignItems:'center', justifyContent:'center', marginTop: 3,}}>
+          <Text style={styles.billAmount}>{data.item.balance_amount}</Text>
+          <Text style={styles.billDate}>      {data.item.balance_date}</Text>
+        </View>
       </View>
     </TouchableHighlight>
   );
@@ -120,6 +143,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
   },
+  billAmount: {
+    fontSize: 10,
+    color: 'white',
+  },
+  billDate: {
+    fontSize: 10,
+    color: 'white',
+  },
   rowFront: {
     alignItems: 'center',
     backgroundColor: '#1c313a',
@@ -152,4 +183,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF5733',
     right: 0,
   },
+  swipeListView: {
+
+  }
 });

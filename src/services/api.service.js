@@ -130,6 +130,41 @@ export const saveBill = url => {
   return response;
 };
 
+export const startLogin = (url, username, password) => {
+  console.log("wowow this is it");
+  var bodyFormData = new FormData();
+  bodyFormData.append('siteUrl', url);
+  bodyFormData.append('userId', username);
+  bodyFormData.append('password', password);
+  console.log(password, url);
+  const response = axios({
+    method: 'post',
+
+    url: APIPath.root_url + '/api/startLogin/',
+
+    headers: {'Content-Type': 'application/json'},  
+
+    data: bodyFormData,
+  });
+  return response;
+};
+
+export const getBill = () => {
+  console.log("153153153153");
+  console.log(APIPath.root_url + '/api/getBill/');
+  // bodyFormData.append('url', url);
+  const response = axios({
+    method: 'post',
+
+    url: APIPath.root_url + '/api/getBill/',
+
+    headers: {'Content-Type': 'application/json'},
+
+    data: "",
+  });
+  return response;
+};
+
 export default {
   makePayment,
   paymentAmount,
@@ -137,5 +172,6 @@ export default {
   paymentDateBack,
   paymentMethodBack,
   paymentMethod,
-  saveBill,
+  getBill,
+  startLogin,
 };

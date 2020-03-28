@@ -21,6 +21,7 @@ import Payment1 from './screens/payment/Payment1';
 import Payment2 from './screens/payment/Payment2';
 import Payment3 from './screens/payment/Payment3';
 import PaymentReview from './screens/payment/PaymentReview';
+import BillLoginPopup from './components/BillLoginPopup';
 
 const HomeStackNav = createStackNavigator();
 
@@ -48,6 +49,7 @@ function HomeScreen() {
       <HomeStackNav.Screen name="BillAccountType" component={BillAccountType} />
       <HomeStackNav.Screen name="ChooseDate" component={ChooseDate} />
       <HomeStackNav.Screen name="ChooseAmount" component={ChooseAmount} />
+      <HomeStackNav.Screen name="BillLoginPopup" component={BillLoginPopup} />
     </HomeStackNav.Navigator>
   );
 }

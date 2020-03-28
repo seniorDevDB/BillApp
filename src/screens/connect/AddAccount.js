@@ -11,11 +11,8 @@ import {connect} from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
 import SITE_LINKS from '../../constants';
 import {apiService} from '../../services';
-// import md5 from 'md5';
-// const nacl = require('tweetnacl');
-// const utils = require('tweetnacl-util');
-// const encodeBase64 = utils.encodeBase64;
-// global.Buffer = global.Buffer || require('buffer').Buffer;
+import BillLoginPopup from '../../components/BillLoginPopup';
+import Bill from './Bill';
 
 const width = '80%';
 
@@ -37,6 +34,9 @@ class AddAccount extends React.Component {
       'pinterest.com',
       'linkedin.com',
     ],
+    b_showDialog: false,
+    username: '',
+    password: '',
   };
 
   componentDidMount() {
@@ -58,18 +58,39 @@ class AddAccount extends React.Component {
     if (!url.trim()) {
       return;
     }
-    this.setState({query: url});
+    this.setState({query: url, b_showDialog: true});
     console.log('next', url);
     //save info in the database
-    try {
-      const response = await apiService.saveBill(url);
-      console.log('this is response data', response.data);
-      this.props.navigation.navigate('Bill', {url});
-    } catch (error) {
-      console.log(error);
-    }
-    //this.props.navigation.navigate('Connect', {url});
-    this.props.navigation.navigate('Bill', {url});
+    // try {
+    //   const response = await apiService.saveBill(url);
+    //   console.log('this is response data', response.data);
+    //   if (response === 'success') {
+    //     this.props.navigation.navigate('Bill', {url});
+    //   } else {
+    //     console.log('failed');
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    // //this.props.navigation.navigate('Connect', {url});
+    // this.props.navigation.navigate('Bill', {url});
+
+    //open modal to login sites
+    // switch (url) {
+    //   case this.state.data[0]:
+    //     return SiteModal[0];
+    //   default:
+    //     return 0;
+    // }
+    // const backgColor = "#fff";
+  };
+
+  handleUsername = text => {
+    this.setState({username: text});
+  };
+
+  handlePassword = text => {
+    this.setState({password: text});
   };
 
   findData(query) {
@@ -80,9 +101,15 @@ class AddAccount extends React.Component {
     const regex = new RegExp(`${query.trim()}`, 'i');
     return data.filter(d => d.search(regex) >= 0);
   }
+  toggleModal = () => {
+    this.setState({b_showDialog: !this.state.b_showDialog});
+    if (this.state.b_showDialog){
+      this.setState({query: ''});
+    }
+  };
 
   render() {
-    const {query} = this.state;
+    const {query, b_showDialog, username, password} = this.state;
     const data = this.findData(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
 
@@ -112,6 +139,38 @@ class AddAccount extends React.Component {
             )}
           />
         </View>
+        {b_showDialog && (
+          <BillLoginPopup
+            isModalVisible={b_showDialog}
+            background="#1c313a"
+            style={styles.popup}
+            toggleModal={this.toggleModal}
+            site={this.state.query}
+            username={this.state.username}
+            password={this.state.password}
+            navigation = {this.props.navigation}>
+            <TextInput
+              style={styles.inputBillLoginContainer}
+              underlineColorAndroid="rgba(0,0,0,0)"
+              placeholder="Username"
+              id="username"
+              value={username}
+              placeholderTextColor="#ffffff"
+              autoCapitalize="none"
+              onChangeText={this.handleUsername}
+            />
+            <TextInput
+              style={styles.inputBillLoginContainer}
+              underlineColorAndroid="rgba(0,0,0,0)"
+              placeholder="Password"
+              id="password"
+              value={password}
+              placeholderTextColor="#ffffff"
+              autoCapitalize="none"
+              onChangeText={this.handlePassword}
+            />
+          </BillLoginPopup>
+        )}
       </View>
     );
   }
@@ -155,6 +214,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     zIndex: 2,
   },
+  inputBillLoginContainer: {
+    backgroundColor: '#859aa4',
+    borderColor: 'gray',
+    borderRadius: 25,
+    // fontSize: 14,
+    paddingHorizontal: 16,
+    zIndex: 2,
+    marginTop: 10,
+    width: '80%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
   inputBox: {
     backgroundColor: 'transparent',
   },
@@ -163,6 +234,9 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
     margin: 2,
+  },
+  popup: {
+    zIndex: 100,
   },
 });
 
