@@ -57,7 +57,7 @@ export const paymentDate = (uuid, todayDate, otherDate) => {
 };
 
 export const paymentDateBack = uuid => {
-  console.log("fdsafdasfdsafds");
+  console.log('fdsafdasfdsafds');
   var bodyFormData = new FormData();
   bodyFormData.append('uuid', uuid);
   console.log('back clcicked in api');
@@ -76,7 +76,7 @@ export const paymentDateBack = uuid => {
 };
 
 export const paymentMethodBack = uuid => {
-  console.log("PaymentReviewBack");
+  console.log('PaymentReviewBack');
   var bodyFormData = new FormData();
   bodyFormData.append('uuid', uuid);
   console.log('back clcicked in api');
@@ -115,6 +115,21 @@ export const paymentMethod = (uuid, method) => {
   return response;
 };
 
+export const saveBill = url => {
+  var bodyFormData = new FormData();
+  bodyFormData.append('url', url);
+  const response = axios({
+    method: 'post',
+
+    url: APIPath.root_url + '/api/saveBill/',
+
+    headers: {'Content-Type': 'application/json'},
+
+    data: bodyFormData,
+  });
+  return response;
+};
+
 export default {
   makePayment,
   paymentAmount,
@@ -122,4 +137,5 @@ export default {
   paymentDateBack,
   paymentMethodBack,
   paymentMethod,
+  saveBill,
 };

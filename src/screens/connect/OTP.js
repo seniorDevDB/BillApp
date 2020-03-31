@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {ERR_KEYWORDS} from '../constants';
+import {ERR_KEYWORDS} from '../../constants';
 import {connect} from 'react-redux';
 
 const width = '80%';

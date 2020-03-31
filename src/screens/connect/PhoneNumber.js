@@ -8,7 +8,7 @@ import {
   Alert,
   TouchableHighlight,
 } from 'react-native';
-import {ERR_KEYWORDS} from '../constants';
+import {ERR_KEYWORDS} from '../../constants';
 
 export default class PhoneNumber extends React.Component {
   // state = {

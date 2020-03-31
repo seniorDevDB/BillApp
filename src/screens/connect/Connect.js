@@ -7,17 +7,17 @@ import {
   Alert,
   Text,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
-import styles from '../utils/style';
-import {ERR_KEYWORDS} from '../constants';
-import AnimatedProgressWheel from 'react-native-progress-wheel';
+import styles from '../../utils/style';
+import {ERR_KEYWORDS} from '../../constants';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 'nemec805',
-      password: 'Jamesford1',
+      id: '4196511828',
+      password: 'T54dbTF67!',
       phone_number: '',
       site_url: props.route.params.url,
       b_credential: true,
@@ -26,9 +26,7 @@ export default class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log('dfafdfdgdfsfd', ERR_KEYWORDS);
-  }
+  componentDidMount() {}
 
   handleId = text => {
     this.setState({id: text});
@@ -102,9 +100,11 @@ export default class App extends React.Component {
           this.handleAlert(ERR_KEYWORDS.GET_PHONENUMBER_ERROR);
         } else if (responseJson.res == 'success') {
           console.log('here we want this ssss');
+          this.setState({b_progress_circle: false});
           this.props.navigation.navigate('Result', {responseJson});
         } else {
-          this.props.navigation.navigate('Result', {responseJson});
+          // this.props.navigation.navigate('Result', {responseJson});
+          console.log('this is else');
         }
       })
       .catch(error => {
@@ -202,16 +202,7 @@ export default class App extends React.Component {
         </TouchableOpacity>
         <View style={styles.progressBar}>
           {this.state.b_progress_circle ? (
-            <AnimatedProgressWheel
-              size={120}
-              width={20}
-              progress={100}
-              animateFromValue={0}
-              duration={10000}
-              color={'#1c313a'}
-              fullColor={'#204051'}
-              repeat={'true'}
-            />
+            <ActivityIndicator size="large" color="#1c313a" />
           ) : (
             <Fragment />
           )}

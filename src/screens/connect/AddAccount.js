@@ -10,6 +10,7 @@ import {
 import {connect} from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
 import SITE_LINKS from '../../constants';
+import {apiService} from '../../services';
 // import md5 from 'md5';
 // const nacl = require('tweetnacl');
 // const utils = require('tweetnacl-util');
@@ -25,7 +26,7 @@ class AddAccount extends React.Component {
     data: [
       'att.com',
       'spectrum.net',
-      'consumersenergy.com/',
+      'consumersenergy.com',
       'facebook.com',
       'youtube.com',
       'yahoo.com',
@@ -53,13 +54,22 @@ class AddAccount extends React.Component {
     // console.log(result);
   }
 
-  handleConnect = url => {
+  handleConnect = async url => {
     if (!url.trim()) {
       return;
     }
     this.setState({query: url});
     console.log('next', url);
-    this.props.navigation.navigate('Connect', {url});
+    //save info in the database
+    try {
+      const response = await apiService.saveBill(url);
+      console.log('this is response data', response.data);
+      this.props.navigation.navigate('Bill', {url});
+    } catch (error) {
+      console.log(error);
+    }
+    //this.props.navigation.navigate('Connect', {url});
+    this.props.navigation.navigate('Bill', {url});
   };
 
   findData(query) {

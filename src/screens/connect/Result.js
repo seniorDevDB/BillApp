@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import AnimatedProgressWheel from 'react-native-progress-wheel';
 import {apiService} from '../../services';
 
 const width = '80%';
@@ -11,7 +10,6 @@ export default class Result extends React.Component {
     // eslint-disable-next-line no-undef
     this.state = {
       url: '',
-      b_progress_circle: true,
       profile_uuid: '',
     };
   }
@@ -50,27 +48,13 @@ export default class Result extends React.Component {
           {route.params.responseJson.billDate}
         </Text>
         <Text style={styles.textContainer}>
-          ${route.params.responseJson.amount}
+          {route.params.responseJson.amount}
         </Text>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Text
-            disabled={this.state.b_disable}
-            style={styles.buttonText}
-            onPress={this.handleMakePayment}>
+        <TouchableOpacity>
+          <Text disabled={this.state.b_disable} style={styles.buttonText}>
             Make a Payment
           </Text>
         </TouchableOpacity>
-        {this.state.b_progress_circle ? (
-          <AnimatedProgressWheel
-            progress={100}
-            animateFromValue={0}
-            duration={10000}
-            color={'white'}
-            fullColor={'red'}
-          />
-        ) : (
-          <Fragment />
-        )}
       </View>
     );
   }
@@ -87,18 +71,5 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontSize: 20,
     marginTop: 5,
-  },
-  buttonContainer: {
-    backgroundColor: '#1c313a',
-    borderRadius: 25,
-    width: width,
-    marginVertical: 10,
-    paddingVertical: 13,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#ffffff',
-    textAlign: 'center',
   },
 });

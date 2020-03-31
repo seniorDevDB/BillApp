@@ -33,7 +33,7 @@ export default class Payment extends React.Component {
 
   handleContinue = async text => {
     console.log("clcicked");
-    console.log("what can we do owowowo yes", this.state.profile_uuid);
+    console.log('what can we do owowowo yes', this.state.profile_uuid);
     try {
       const response = await apiService.paymentAmount(
         this.state.profile_uuid,

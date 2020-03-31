@@ -11,6 +11,11 @@ import Connect from './screens/connect/Connect';
 import OTP from './screens/connect/OTP';
 import Result from './screens/connect/Result';
 import PhoneNumber from './screens/connect/PhoneNumber';
+import Bill from './screens/connect/Bill';
+import BillPayment from './screens/connect/BillPayment';
+import BillAccountType from './screens/connect/BillAccountType';
+import ChooseDate from './screens/connect/ChooseDate';
+import ChooseAmount from './screens/connect/ChooseAmount';
 import {connect} from 'react-redux';
 import Payment1 from './screens/payment/Payment1';
 import Payment2 from './screens/payment/Payment2';
@@ -28,6 +33,7 @@ function HomeScreen() {
           <Header scene={scene} navigation={navigation} />
         ),
       }}>
+      <HomeStackNav.Screen name="Bill" component={Bill} />
       <HomeStackNav.Screen name="AddAccount" component={AddAccount} />
       <HomeStackNav.Screen name="Connect" component={Connect} />
       <HomeStackNav.Screen name="OTP" component={OTP} />
@@ -37,6 +43,11 @@ function HomeScreen() {
       <HomeStackNav.Screen name="Payment2" component={Payment2} />
       <HomeStackNav.Screen name="Payment3" component={Payment3} />
       <HomeStackNav.Screen name="PaymentReview" component={PaymentReview} />
+      {/* <HomeStackNav.Screen name="Bill" component={Bill} /> */}
+      <HomeStackNav.Screen name="BillPayment" component={BillPayment} />
+      <HomeStackNav.Screen name="BillAccountType" component={BillAccountType} />
+      <HomeStackNav.Screen name="ChooseDate" component={ChooseDate} />
+      <HomeStackNav.Screen name="ChooseAmount" component={ChooseAmount} />
     </HomeStackNav.Navigator>
   );
 }

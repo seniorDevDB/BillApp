@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {signIn, isSignedIn} from '../redux/actions/auth.action';
+import {signIn, isSignedIn} from '../../redux/actions/auth.action';
 
 const width = '80%';
 
