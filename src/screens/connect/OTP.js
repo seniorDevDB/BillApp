@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component, Fragment} from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -7,6 +7,7 @@ import {
   Alert,
   TouchableOpacity,
   Text,
+  ActivityIndicator,
 } from 'react-native';
 import {ERR_KEYWORDS} from '../../constants';
 import {connect} from 'react-redux';
@@ -20,6 +21,7 @@ export default class App extends React.Component {
     this.state = {
       code: '',
       profile_uuid: '',
+      b_progress_circle: false,
     };
   }
 
@@ -35,9 +37,11 @@ export default class App extends React.Component {
   };
 
   handleSubmit = () => {
+    this.setState({b_progress_circle: true});
     const data = new FormData();
     data.append('code', this.state.code);
     data.append('uuid', this.state.profile_uuid);
+    data.append('username', "4196511828");
     fetch('http://13.92.168.44:8000/api/opt/', {
       method: 'POST',
       body: data,
@@ -52,13 +56,18 @@ export default class App extends React.Component {
         //   ? this.props.navigation.navigate('OTP', {responseJson})
         //   : this.props.navigation.navigate('Result', {responseJson});
         if (responseJson.res == ERR_KEYWORDS.GET_BALANCE_SUCCESS) {
-          this.props.navigation.navigate('Result', {responseJson});
+          this.setState({b_progress_circle: false});
+          // this.props.navigation.navigate('Result', {responseJson});
+          this.props.navigation.navigate('Bill');
         } else if (responseJson.res == ERR_KEYWORDS.OTP_LOADING_ERROR) {
+          this.setState({b_progress_circle: false});
           this.handleAlert(ERR_KEYWORDS.OTP_LOADING_ERROR);
         } else if (responseJson.res == ERR_KEYWORDS.INVALID_OTP) {
           this.handleAlert(ERR_KEYWORDS.INVALID_OTP);
+          this.setState({b_progress_circle: false});
         } else {
           //ERR_KEYWORDS.BALANCE_ERROR
+          this.setState({b_progress_circle: false});
           this.handleAlert();
         }
       })
@@ -105,6 +114,11 @@ export default class App extends React.Component {
             NEXT
           </Text>
         </TouchableOpacity>
+        {this.state.b_progress_circle ? (
+              <ActivityIndicator size="large" color="#fff" />
+            ) : (
+              <Fragment />
+            )}
       </View>
     );
   }

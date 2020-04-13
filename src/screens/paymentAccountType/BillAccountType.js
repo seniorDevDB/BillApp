@@ -13,8 +13,10 @@ import {
 } from 'react-native';
 import {ERR_KEYWORDS} from '../../constants';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
+import { billAccountType } from '../../redux/actions/payment.actions';
 
-export default class BillAccountType extends React.Component {
+class BillAccountType extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,9 +59,25 @@ export default class BillAccountType extends React.Component {
       ],
     };
   }
+  componentDidMount() {
 
-  handleClick(index) {
+  }
+
+  handleClick= async (index)=> {
     console.log('payment', index);
+    const {dispatch} = this.props;
+    try {
+      console.log('ddddddddddddddddddddd');
+      await dispatch(billAccountType(index));
+      // navigate("Home");
+    } catch (error) {
+      console.log('dddddddddddddddds', error);
+    }
+    const listData = [...this.state.data];
+    if (index == listData[0].label){
+      this.props.route.params.updateAccountType;
+      this.props.navigation.navigate('CreditVisa');
+    }
   }
   render() {
     const {data} = this.state;
@@ -134,3 +152,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+const mapStateToProps = ({payment}) => ({payment});
+
+export default connect(mapStateToProps)(BillAccountType);

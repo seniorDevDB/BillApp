@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {
   StyleSheet,
@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import {apiService} from '../../services';
-import { Left } from 'native-base';
+import {Left} from 'native-base';
 
 export default class Bill extends Component {
   constructor(props) {
@@ -17,10 +18,16 @@ export default class Bill extends Component {
     // eslint-disable-next-line no-undef
     this.state = {
       listData: [
-        {text: 'att.com',balance_amount: '', balance_date: '', key: '1'},
-        {text: 'spectrum.net',balance_amount: '', balance_date: '', key: '2'},
-        {text: 'consumersenergy',balance_amount: '', balance_date: '', key: '3'},
+        {text: 'att.com', balance_amount: '', balance_date: '', key: '1'},
+        {text: 'spectrum.net', balance_amount: '', balance_date: '', key: '2'},
+        {
+          text: 'consumersenergy',
+          balance_amount: '',
+          balance_date: '',
+          key: '3',
+        },
       ],
+      b_progress_circle: false,
     };
   }
 
@@ -29,39 +36,60 @@ export default class Bill extends Component {
     const listData = [...this.state.listData];
     const index = this.state.listData.length;
     // listData.push({text: route.params.site, key: index + 1});
+    console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
     this.setState({listData});
 
     // connect to backend
     this.getBillInfo();
-
   }
 
   getBillInfo = async () => {
-    console.log("39393933939399339");
+    console.log('39393933939399339');
     const response = await apiService.getBill();
-    console.log("responsesesesese", response.data);
+    console.log('responsesesesese', response.data);
     const data = response.data;
     const listData = [...this.state.listData];
     const index = this.state.listData.length;
-    for(let i = 0; i < response.data.length; i ++){
-      listData.push({text: data[i].site, balance_amount: data[i].balance_amount, balance_date: data[i].balance_date, key: index + 1 + i})
+    for (let i = 0; i < response.data.length; i++) {
+      listData.push({
+        text: data[i].site,
+        balance_amount: data[i].balance_amount,
+        balance_date: data[i].balance_date,
+        key: index + 1 + i,
+      });
     }
     this.setState({listData});
-  }
+  };
 
-  closeRow = (rowMap, rowKey) => {
-    if (rowMap[rowKey]) {
-      rowMap[rowKey].closeRow();
+  closeRow = async (rowMap, rowKey) => {
+    // if (rowMap[rowKey]) {
+    //   rowMap[rowKey].closeRow();
+    // }
+    console.log('refreshed');
+    this.setState({b_progress_circle: true});
+    try {
+      const response = await apiService.refreshLogin('att.com');
+      console.log('this is response data', response.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  deleteRow = (rowMap, rowKey) => {
+  deleteRow = async (rowMap, rowKey) => {
     this.closeRow(rowMap, rowKey);
     const {listData} = this.state;
     const newData = [...listData];
     const prevIndex = listData.findIndex(item => item.key === rowKey);
     newData.splice(prevIndex, 1);
     this.setState({listData: newData});
+    console.log('deleted');
+    this.setState({b_progress_circle: true});
+    try {
+      const response = await apiService.deleteBill('att.com');
+      console.log('this is response data', response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   onRowDidOpen = rowKey => {
@@ -77,9 +105,15 @@ export default class Bill extends Component {
       underlayColor={'#AAA'}>
       <View>
         <Text style={styles.billText}>{data.item.text}</Text>
-        <View style= {{flexDirection: 'row', alignItems:'center', justifyContent:'center', marginTop: 3,}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 3,
+          }}>
           <Text style={styles.billAmount}>{data.item.balance_amount}</Text>
-          <Text style={styles.billDate}>      {data.item.balance_date}</Text>
+          <Text style={styles.billDate}> {data.item.balance_date}</Text>
         </View>
       </View>
     </TouchableHighlight>
@@ -114,6 +148,11 @@ export default class Bill extends Component {
           onRowDidOpen={this.onRowDidOpen}
           style={styles.swipeListView}
         />
+        {this.state.b_progress_circle ? (
+          <ActivityIndicator size="large" color="#fff" />
+        ) : (
+          <Fragment />
+        )}
       </View>
     );
   }
@@ -183,7 +222,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF5733',
     right: 0,
   },
-  swipeListView: {
-
-  }
+  swipeListView: {},
 });

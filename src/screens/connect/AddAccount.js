@@ -101,6 +101,7 @@ class AddAccount extends React.Component {
     const regex = new RegExp(`${query.trim()}`, 'i');
     return data.filter(d => d.search(regex) >= 0);
   }
+  
   toggleModal = () => {
     this.setState({b_showDialog: !this.state.b_showDialog});
     if (this.state.b_showDialog){

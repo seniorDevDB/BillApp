@@ -13,9 +13,12 @@ import Result from './screens/connect/Result';
 import PhoneNumber from './screens/connect/PhoneNumber';
 import Bill from './screens/connect/Bill';
 import BillPayment from './screens/connect/BillPayment';
-import BillAccountType from './screens/connect/BillAccountType';
+import BillAccountType from './screens/paymentAccountType/BillAccountType';
+import CreditVisa from './screens/paymentAccountType/CreditVisa';
+import Checking from './screens/paymentAccountType/Checking';
 import ChooseDate from './screens/connect/ChooseDate';
 import ChooseAmount from './screens/connect/ChooseAmount';
+import InputAmount from './screens/connect/InputAmount';
 import {connect} from 'react-redux';
 import Payment1 from './screens/payment/Payment1';
 import Payment2 from './screens/payment/Payment2';
@@ -50,6 +53,9 @@ function HomeScreen() {
       <HomeStackNav.Screen name="ChooseDate" component={ChooseDate} />
       <HomeStackNav.Screen name="ChooseAmount" component={ChooseAmount} />
       <HomeStackNav.Screen name="BillLoginPopup" component={BillLoginPopup} />
+      <HomeStackNav.Screen name="InputAmount" component={InputAmount} />
+      <HomeStackNav.Screen name="CreditVisa" component={CreditVisa} />
+      <HomeStackNav.Screen name="Checking" component={Checking} />
     </HomeStackNav.Navigator>
   );
 }

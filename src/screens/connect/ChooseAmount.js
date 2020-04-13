@@ -36,8 +36,13 @@ export default class BillAccountType extends React.Component {
     };
   }
 
-  handleClick(index) {
-    console.log('payment', index);
+  handleClick(label) {
+    console.log('payment', label);
+    if (label === 'Amount Due') {
+      console.log("should add link here");
+    } else if (label === 'Other') {
+      this.props.navigation.navigate('InputAmount', {updateAmount: this.props.route.params.updateAmount});
+    }
   }
   render() {
     const {data} = this.state;

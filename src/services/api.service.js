@@ -1,10 +1,23 @@
 import axios from 'axios';
 import APIPath from '../utils/fetchUrls';
 
-export const makePayment = uuid => {
+export const makePayment = (site, amount, pay_date, card_number, expiration_date, security_code, zip_code) => {
   console.log('okokokokokokkokok');
   var bodyFormData = new FormData();
-  bodyFormData.append('uuid', uuid);
+  // bodyFormData.append('site', site);
+  // bodyFormData.append('amount', amount);
+  // bodyFormData.append("pay_date", pay_date);
+  // bodyFormData.append("routing_number", routing_number);
+  // bodyFormData.append("account_number", account_number);
+
+  bodyFormData.append('site', site);
+  bodyFormData.append('amount', amount);
+  bodyFormData.append("pay_date", pay_date);
+  bodyFormData.append("card_number", "4403931455988551");
+  bodyFormData.append("expiration_date", "865");
+  bodyFormData.append("security_code", "49686");
+  bodyFormData.append("zip_code", "49686");
+  console.log("191919191191919");
   const response = axios({
     method: 'post',
 
@@ -17,6 +30,23 @@ export const makePayment = uuid => {
   console.log(response.data);
   return response;
 };
+
+// export const makePayment = uuid => {
+//   console.log('okokokokokokkokok');
+//   var bodyFormData = new FormData();
+//   bodyFormData.append('uuid', uuid);
+//   const response = axios({
+//     method: 'post',
+
+//     url: APIPath.root_url + `/api/makePayment/`,
+
+//     headers: {'Content-Type': 'application/json'},
+
+//     data: bodyFormData,
+//   });
+//   console.log(response.data);
+//   return response;
+// };
 
 export const paymentAmount = (uuid, amount) => {
   var bodyFormData = new FormData();
@@ -149,6 +179,23 @@ export const startLogin = (url, username, password) => {
   return response;
 };
 
+export const refreshLogin = (url) => {
+  console.log("wowow this is it");
+  var bodyFormData = new FormData();
+  bodyFormData.append('siteUrl', url);
+  console.log("ddfdsafdsafds", url);
+  const response = axios({
+    method: 'post',
+
+    url: APIPath.root_url + '/api/refreshLogin/',
+
+    headers: {'Content-Type': 'application/json'},  
+
+    data: bodyFormData,
+  });
+  return response;
+};
+
 export const getBill = () => {
   console.log("153153153153");
   console.log(APIPath.root_url + '/api/getBill/');
@@ -165,6 +212,25 @@ export const getBill = () => {
   return response;
 };
 
+export const deleteBill = () => {
+  console.log("deleteBill");
+  console.log(APIPath.root_url + '/api/deleteBill/');
+  var bodyFormData = new FormData();
+  bodyFormData.append('url', url);
+  const response = axios({
+    method: 'post',
+
+    url: APIPath.root_url + '/api/getBill/',
+
+    headers: {'Content-Type': 'application/json'},
+
+    data: "",
+  });
+  return response;
+};
+
+
+
 export default {
   makePayment,
   paymentAmount,
@@ -174,4 +240,5 @@ export default {
   paymentMethod,
   getBill,
   startLogin,
+  refreshLogin,
 };

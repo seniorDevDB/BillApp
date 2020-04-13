@@ -11,6 +11,8 @@ import {
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Entypo';
 import {apiService} from '../services';
+// import {connect} from 'react-redux';
+// import {bill_login} from '../../redux/actions/bill_login.action';
 
 export default class SiteLoginModal extends Component {
   constructor(props) {
@@ -61,11 +63,17 @@ export default class SiteLoginModal extends Component {
       //     {cancelable: false},
       //     //clicking out side of alert will not cancel
       //   );
-      // } else if (responseJson.res == 'phoneNumber') {
-      //   this.props.navigation.navigate('PhoneNumber', {responseJson});
-      // } else if (responseJson.billDate == ERR_KEYWORDS.GET_PHONENUMBER_ERROR) {
+       } 
+      else if (responseJson.res == 'phoneNumber') {
+        console.log("phone number is called here");
+        this.props.toggleModal();
+        this.setState({b_progress_circle: false});
+        this.props.navigation.navigate('PhoneNumber', {responseJson});
+       } 
+       //else if (responseJson.billDate == ERR_KEYWORDS.GET_PHONENUMBER_ERROR) {
       //   this.handleAlert(ERR_KEYWORDS.GET_PHONENUMBER_ERROR);
-      } else if (responseJson.res === 'success') {
+      //} 
+      else if (responseJson.res === 'success') {
         console.log('here we want this ssss');
         this.setState({b_progress_circle: false});
         this.props.navigation.navigate('Bill', {site});

@@ -13,8 +13,10 @@ import {
 } from 'react-native';
 import {ERR_KEYWORDS} from '../../constants';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {apiService} from '../../services';
+import {connect} from 'react-redux';
 
-export default class BillPayment extends React.Component {
+class BillPayment extends React.Component {
   constructor(props) {
     super(props);
     var date = new Date().getDate();
@@ -26,11 +28,13 @@ export default class BillPayment extends React.Component {
           label: 'Choose Amount',
           description: "Select the amount you'd like to pay",
           icon: 'dollar',
+          amount: '',
           id: 'phone1',
         },
         {
           label: 'Now',
           description: date + '-' + month + '-' + year,
+          payDate: '',
           icon: 'calendar',
           id: 'phone2',
         },
@@ -38,24 +42,98 @@ export default class BillPayment extends React.Component {
           label: 'Choose Account',
           description: "Select the account you'd like to pay from",
           icon: 'credit-card',
+          routing_number: '',
+          account_number: '',
           id: 'phone3',
         },
       ],
     };
   }
 
-  handleClick(index) {
+  componentDidMount() {
+    console.log("commpone IDD mount called");
+    // const {navigation, route, payment} = this.props;
+    // console.log(payment);
+    // let data = [...this.state.data];
+    // data[0].label= payment.amount;
+    // data[2].label= payment.bill_account_type;
+  }
+
+  updateAccountTypeInfo=(routing_number, account_number)=> {
+    // const {route} = this.props;
+    console.log("848484848484484848")
+    console.log(this.state);
+    let data = [...this.state.data];
+    console.log(data);
+    // if(route && route.params && route.params.amount){
+    //   data[0].label = route.params.amount;
+    //   this.setState(data);
+    // }
+    // else if(route && route.params && route.params.account_number && route.params.routing_number){
+    //   console.log("called accounting number");
+    //   data[2].routing_number = routing_number;
+    //   data[2].account_number = account_number;
+    //   this.setState(data);
+    // }
+    console.log(routing_number, account_number);
+    data[2].routing_number = routing_number;
+    data[2].account_number = account_number;
+    this.setState(data);
+  }
+
+  updateAccountType=()=> {
+    console.log("account type clicked");
+    let data = [...this.state.data];
+    data[3].label = payment.bill_account_type;
+    this.setState(data);
+  }
+
+  updateAmount=(amount)=> {
+    console.log("amount", amount);
+    let data = [...this.state.data];
+    data[0].label = amount;
+    this.setState(data);
+  }
+
+  handleClick=(index)=> {
     console.log('4242424242', index);
-    if (index === 'Choose Account') {
-      this.props.navigation.navigate('BillAccountType');
-    } else if (index === 'Now') {
+    let state_data = [...this.state.data];
+    if (index === state_data[0].label) {
+      console.log("6161616");
+      this.props.navigation.navigate('ChooseAmount', {updateAmount: this.updateAmount});
+    } else if (index === state_data[1].label) {
       this.props.navigation.navigate('ChooseDate');
-    } else if (index === 'Choose Amount') {
-      this.props.navigation.navigate('ChooseAmount');
+    } else if (index === state_data[2].label) {
+      console.log("4242424242")
+      this.props.navigation.navigate('BillAccountType', {updateAccountType: this.updateAccountType});
     }
   }
+
+  handleMakePayment = async () => {
+    console.log("clcicked");
+    const {navigation, route, payment} = this.props;
+    console.log("115115115115", payment.amount);
+    console.log(payment.bill_account_info);
+    let data = [...this.state.data];
+    try {
+      const response = await apiService.makePayment(
+        "att.com",
+        payment.amount,
+        "payDate",
+        payment.bill_account_info.card_number,
+        payment.bill_account_info.expiration_date,
+        payment.bill_account_info.security_code,
+        payment.bill_account_info.zip_code,
+      );
+      console.log('this is response data', response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
-    const {navigation, route} = this.props;
+    const {navigation, route, payment} = this.props;
+    // console.log("fdsafdsafdsfdsa", payment.bill_account_info);
     const {data} = this.state;
     return (
       <View style={styles.container}>
@@ -147,3 +225,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
+
+const mapStateToProps = ({payment}) => ({payment});
+
+export default connect(mapStateToProps)(BillPayment);

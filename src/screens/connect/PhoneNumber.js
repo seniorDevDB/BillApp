@@ -56,9 +56,9 @@ export default class PhoneNumber extends React.Component {
     const {route} = this.props;
     console.log(route.params);
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({data: route.params.responseJson.billDate});
+    this.setState({data: route.params.responseJson.phone_number});
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({profile_uuid: route.params.responseJson.amount});
+    this.setState({profile_uuid: route.params.responseJson.uuid});
   }
 
   // update state
@@ -68,6 +68,7 @@ export default class PhoneNumber extends React.Component {
     const data = new FormData();
     data.append('phoneNumber', whichnum);
     data.append('uuid', this.state.profile_uuid);
+    console.log(this.state.profile_uuid);
     fetch('http://13.92.168.44:8000/api/phoneNumber/', {
       method: 'POST',
       body: data,
